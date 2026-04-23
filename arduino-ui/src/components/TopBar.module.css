@@ -13,7 +13,7 @@
 
 .logo {
   font-family: 'Space Mono', monospace;
-  font-size: 13px;
+  font-size: 18px;
   color: #00c8ff;
   letter-spacing: 3px;
 }
@@ -26,14 +26,14 @@
 
 .serialState {
   font-family: 'Space Mono', monospace;
-  font-size: 10px;
+  font-size: 14px;
   letter-spacing: 1.2px;
-  color: rgba(0, 200, 255, 0.75);
+  color: rgba(0, 200, 255, 0.95);
 }
 
 .protoPill {
   font-family: 'Space Mono', monospace;
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 1px;
   padding: 3px 8px;
   border-radius: 12px;
@@ -41,13 +41,13 @@
 }
 
 .protoOk {
-  border-color: rgba(0, 255, 136, 0.35);
-  color: rgba(0, 255, 136, 0.72);
+  border-color: rgba(0, 255, 136, 0.95);
+  color: rgba(0, 255, 136, 0.95);
   background: rgba(0, 255, 136, 0.05);
 }
 
 .protoBad {
-  border-color: rgba(255, 122, 122, 0.38);
+  border-color: rgba(255, 122, 122, 0.95);
   color: rgba(255, 122, 122, 0.85);
   background: rgba(255, 122, 122, 0.06);
 }
@@ -59,7 +59,7 @@
   border-radius: 16px;
   padding: 4px 10px;
   font-family: 'Space Mono', monospace;
-  font-size: 10px;
+  font-size: 14px;
   letter-spacing: 1px;
   cursor: pointer;
 }
@@ -70,13 +70,13 @@
 
 .serialError {
   font-family: 'Space Mono', monospace;
-  font-size: 10px;
+  font-size: 14px;
   color: #ff7a7a;
 }
 
 .pill {
   font-family: 'Space Mono', monospace;
-  font-size: 10px;
+  font-size: 14px;
   padding: 4px 14px;
   border-radius: 20px;
   border: 0.5px solid;
@@ -85,14 +85,14 @@
 
 /* Quiet-dark: nominal is subdued so alert states clearly pop out */
 .nominal {
-  border-color: rgba(0, 255, 136, 0.4);
-  color: rgba(0, 255, 136, 0.7);
+  border-color: rgba(0, 255, 136, 0.95);
+  color: rgba(0, 255, 136, 0.95);
   background: rgba(0, 255, 136, 0.06);
 }
 
 /* Yellow/amber = Caution (class 3) */
 .caution {
-  border-color: rgba(255, 200, 0, 0.6);
+  border-color: rgba(255, 200, 0, 0.95);
   color: #ffc800;
   background: rgba(255, 200, 0, 0.1);
   animation: pulse 2s infinite;
@@ -100,7 +100,7 @@
 
 /* Red = Emergency (class 1) */
 .emergency {
-  border-color: rgba(255, 68, 68, 0.7);
+  border-color: rgba(255, 68, 68, 0.95);
   color: #ff4444;
   background: rgba(255, 68, 68, 0.12);
   animation: pulse 0.8s infinite;
@@ -113,6 +113,6 @@
 
 .time {
   font-family: 'Space Mono', monospace;
-  font-size: 11px;
-  color: rgba(200, 216, 240, 0.55);
+  font-size: 15px;
+  color: rgba(200, 216, 240, 0.95);
 }

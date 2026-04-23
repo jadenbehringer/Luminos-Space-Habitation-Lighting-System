@@ -8,9 +8,9 @@
 
 .topLabel {
   font-family: 'Space Mono', monospace;
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 2px;
-  color: rgba(0, 200, 255, 0.7);
+  color: rgba(0, 200, 255, 0.95);
   text-transform: uppercase;
   padding: 16px 20px 12px;
   border-bottom: 0.5px solid rgba(0, 180, 255, 0.08);
@@ -29,14 +29,14 @@
 }
 
 .servoName {
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 500;
   color: #c8d8f0;
 }
 
 .badge {
   font-family: 'Space Mono', monospace;
-  font-size: 8px;
+  font-size: 11px;
   padding: 2px 6px;
   border-radius: 3px;
   letter-spacing: 0.5px;
@@ -49,12 +49,12 @@
 
 .badgeSim {
   background: rgba(100, 100, 120, 0.15);
-  color: rgba(200, 216, 240, 0.3);
+  color: rgba(200, 216, 240, 0.95);
 }
 
 .servoLoc {
-  font-size: 10px;
-  color: rgba(200, 216, 240, 0.55);
+  font-size: 14px;
+  color: rgba(200, 216, 240, 0.95);
   margin-bottom: 8px;
 }
 
@@ -75,8 +75,8 @@
 .servoVals {
   display: flex;
   justify-content: space-between;
-  font-size: 9px;
-  color: rgba(200, 216, 240, 0.5);
+  font-size: 12px;
+  color: rgba(200, 216, 240, 0.95);
   font-family: 'Space Mono', monospace;
 }
 
@@ -87,9 +87,9 @@
 
 .subLabel {
   font-family: 'Space Mono', monospace;
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 1.5px;
-  color: rgba(0, 200, 255, 0.65);
+  color: rgba(0, 200, 255, 0.95);
   text-transform: uppercase;
   margin-bottom: 10px;
 }
@@ -102,8 +102,8 @@
 }
 
 .filterName {
-  font-size: 11px;
-  color: rgba(200, 216, 240, 0.65);
+  font-size: 15px;
+  color: rgba(200, 216, 240, 0.95);
 }
 
 .filterState {
@@ -111,7 +111,7 @@
   align-items: center;
   gap: 4px;
   font-family: 'Space Mono', monospace;
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 1px;
 }
 
@@ -120,11 +120,11 @@
 }
 
 .filterStandby {
-  color: rgba(200, 216, 240, 0.28);
+  color: rgba(200, 216, 240, 0.95);
 }
 
 .filterIcon {
-  font-size: 7px;
+  font-size: 11px;
 }
 
 .flareBlock {
@@ -140,7 +140,7 @@
 }
 
 .flareIcon {
-  font-size: 9px;
+  font-size: 12px;
   transition: color 0.3s;
 }
 
@@ -150,26 +150,26 @@
 }
 
 .flareIconNominal {
-  color: rgba(0, 255, 136, 0.6);
+  color: rgba(0, 255, 136, 0.95);
 }
 
 .flareTextAlert {
   font-family: 'Space Mono', monospace;
-  font-size: 9px;
+  font-size: 12px;
   color: #ff4444;
   letter-spacing: 0.5px;
 }
 
 .flareTextNominal {
   font-family: 'Space Mono', monospace;
-  font-size: 9px;
-  color: rgba(0, 255, 136, 0.6);
+  font-size: 12px;
+  color: rgba(0, 255, 136, 0.95);
 }
 
 .delta {
   font-family: 'Space Mono', monospace;
-  font-size: 9px;
-  color: rgba(200, 216, 240, 0.4);
+  font-size: 12px;
+  color: rgba(200, 216, 240, 0.95);
 }
 
 @keyframes blink {

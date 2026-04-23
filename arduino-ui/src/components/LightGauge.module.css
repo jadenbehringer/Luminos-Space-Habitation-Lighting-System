@@ -32,15 +32,15 @@
 
 .unit {
   font-family: 'Space Mono', monospace;
-  font-size: 10px;
-  color: rgba(200, 216, 240, 0.5);
+  font-size: 14px;
+  color: rgba(200, 216, 240, 0.95);
   letter-spacing: 2px;
   margin-top: 4px;
 }
 
 .statusLabel {
   font-family: 'Space Mono', monospace;
-  font-size: 7px;
+  font-size: 11px;
   letter-spacing: 1.5px;
   margin-top: 4px;
   transition: color 0.8s ease;
@@ -62,9 +62,9 @@
 
 .statLabel {
   font-family: 'Space Mono', monospace;
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 1.5px;
-  color: rgba(200, 216, 240, 0.6);
+  color: rgba(200, 216, 240, 0.95);
   margin-bottom: 6px;
   text-transform: uppercase;
 }
@@ -78,8 +78,8 @@
 
 .statSub {
   font-family: 'Space Mono', monospace;
-  font-size: 9px;
-  color: rgba(200, 216, 240, 0.45);
+  font-size: 12px;
+  color: rgba(200, 216, 240, 0.95);
   margin-top: 2px;
   transition: color 0.5s ease;
 }

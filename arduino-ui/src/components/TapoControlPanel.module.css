@@ -8,10 +8,83 @@
   gap: 14px;
 }
 
-.controlsGrid {
+.mainControlsRow {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: 2.5fr 1fr;
   gap: 12px;
+}
+
+.combinedCard {
+  background: rgba(0, 30, 70, 0.45);
+  border: 0.5px solid rgba(0, 180, 255, 0.2);
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.blueText {
+  color: #00c8ff !important;
+}
+
+.disabledText {
+  color: #ff4444 !important;
+}
+
+.sliderContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.cardHeader {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #00c8ff;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(0, 180, 255, 0.1);
+  padding-bottom: 8px;
+}
+
+.topRow {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.subControl {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.divider {
+  width: 1px;
+  height: 60px;
+  background: rgba(0, 180, 255, 0.1);
+}
+
+.horizontalDivider {
+  height: 1px;
+  background: rgba(0, 180, 255, 0.1);
+}
+
+.bottomRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.adaptiveInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .controlCard,
@@ -25,32 +98,80 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
+}
+
+.toggleBtn {
+  background: rgba(0, 200, 255, 0.1);
+  color: #00c8ff;
+  border: 1px solid rgba(0, 200, 255, 0.3);
+  border-radius: 6px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-family: 'Space Mono', monospace;
+  font-size: 14px;
+  transition: all 0.2s;
+  min-width: 100px;
+}
+
+.toggleBtn:hover {
+  background: rgba(0, 200, 255, 0.2);
+  border-color: rgba(0, 200, 255, 0.6);
+}
+
+.powerOnBtn {
+  background: rgba(0, 255, 136, 0.15);
+  color: #00ff88;
+  border-color: rgba(0, 255, 136, 0.6);
+}
+
+.powerOnBtn:hover {
+  background: rgba(0, 255, 136, 0.25);
+  border-color: rgba(0, 255, 136, 0.9);
+}
+
+.negativeBtn {
+  background: rgba(255, 68, 68, 0.15);
+  color: #ff4444;
+  border-color: rgba(255, 68, 68, 0.6);
+}
+
+.negativeBtn:hover {
+  background: rgba(255, 68, 68, 0.25);
+  border-color: rgba(255, 68, 68, 0.9);
 }
 
 .bigInput {
   width: 100%;
-  background: rgba(0, 20, 50, 0.75);
-  border: 0.5px solid rgba(0, 200, 255, 0.35);
-  color: #d8ebff;
+  background: rgba(0, 20, 50, 0.6);
+  border: 1px solid rgba(0, 180, 255, 0.2);
+  color: #ffffff;
   border-radius: 6px;
-  padding: 12px 8px;
+  padding: 8px;
   text-align: center;
   font-family: 'Space Mono', monospace;
-  font-size: 40px;
+  font-size: 32px;
   line-height: 1;
   font-weight: 700;
 }
 
 .btn {
-  background: rgba(0, 200, 255, 0.1);
-  color: #00c8ff;
-  border: 0.5px solid rgba(0, 200, 255, 0.45);
-  border-radius: 6px;
-  padding: 6px 10px;
+  background: #00c8ff;
+  color: #000b1a;
+  border: 1px solid #00c8ff;
+  border-radius: 4px;
+  padding: 6px 16px;
   cursor: pointer;
   font-family: 'Space Mono', monospace;
-  font-size: 11px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  transition: all 0.2s;
+}
+
+.btn:hover:not(:disabled) {
+  background: #40d0ff;
+  border-color: #40d0ff;
 }
 
 .btn:disabled {
@@ -59,7 +180,7 @@
 }
 
 .sliderValue {
-  font-size: 36px;
+  font-size: 32px;
   line-height: 1;
   color: #00c8ff;
   font-family: 'Space Mono', monospace;
@@ -68,26 +189,27 @@
 
 .slider {
   width: 100%;
+  accent-color: #00c8ff;
 }
 
 .autoState {
-  font-size: 28px;
+  font-size: 24px;
   line-height: 1;
-  color: #00c8ff;
+  color: #00ff88;
   font-family: 'Space Mono', monospace;
   font-weight: 700;
 }
 
 .enabledBtn {
-  border-color: rgba(0, 255, 136, 0.45);
+  border-color: rgba(0, 255, 136, 0.6);
   color: #00ff88;
-  background: rgba(0, 255, 136, 0.08);
+  background: rgba(0, 255, 136, 0.15);
 }
 
 .currentLuxValue {
-  font-size: 42px;
+  font-size: 38px;
   line-height: 1;
-  color: #00c8ff;
+  color: #ffffff;
   font-weight: 700;
   font-family: 'Space Mono', monospace;
 }
@@ -95,7 +217,7 @@
 .currentStats {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
 }
 
@@ -108,30 +230,26 @@
 }
 
 .panelName {
-  font-size: 11px;
+  font-size: 13px;
   letter-spacing: 1.2px;
-  color: rgba(200, 216, 240, 0.72);
+  color: rgba(255, 255, 255, 0.7);
   font-family: 'Space Mono', monospace;
   text-transform: uppercase;
 }
 
 .err {
-  color: #ff7a7a;
-  font-size: 11px;
+  color: #ff6666;
+  font-size: 14px;
   font-family: 'Space Mono', monospace;
 }
 
-@media (max-width: 900px) {
-  .controlsGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+@media (max-width: 1200px) {
+  .mainControlsRow {
+    grid-template-columns: 1fr;
   }
 }
 
-@media (max-width: 640px) {
-  .controlsGrid {
-    grid-template-columns: 1fr;
-  }
-
+@media (max-width: 800px) {
   .currentStats {
     grid-template-columns: 1fr;
   }

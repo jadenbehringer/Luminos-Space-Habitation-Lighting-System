@@ -7,9 +7,9 @@
 
 .label {
   font-family: 'Space Mono', monospace;
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 2px;
-  color: rgba(0, 200, 255, 0.5);
+  color: rgba(0, 200, 255, 0.95);
   text-transform: uppercase;
   margin-bottom: 14px;
 }
@@ -31,39 +31,45 @@
 }
 
 .card:hover {
-  border-color: rgba(0, 200, 255, 0.3);
+  border-color: rgba(0, 200, 255, 0.95);
   background: rgba(0, 40, 90, 0.3);
 }
 
 .card.active {
-  border-color: rgba(0, 200, 255, 0.5);
+  border-color: rgba(0, 200, 255, 0.95);
   background: rgba(0, 50, 120, 0.25);
 }
 
-.activeBadge {
+.activeDot {
   position: absolute;
   top: 8px;
   right: 8px;
-  font-family: 'Space Mono', monospace;
-  font-size: 7px;
-  letter-spacing: 1px;
-  color: #00c8ff;
-  background: rgba(0, 200, 255, 0.1);
-  padding: 2px 6px;
-  border-radius: 3px;
+  width: 8px;
+  height: 8px;
+  background-color: var(--green, #00ff88);
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0, 255, 136, 0.6);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
 }
 
 .icon {
-  font-size: 18px;
-  margin-bottom: 8px;
+  font-size: 24px;
+  margin-bottom: 0;
 }
 
 .name {
   font-family: 'Space Mono', monospace;
-  font-size: 10px;
+  font-size: 14px;
   letter-spacing: 1px;
   color: #e0eeff;
-  margin-bottom: 8px;
+  margin-bottom: 0;
+  text-transform: uppercase;
 }
 
 .metricRow {
@@ -76,12 +82,20 @@
 
 .metricLabel {
   font-family: 'Space Mono', monospace;
-  font-size: 9px;
-  color: rgba(200, 216, 240, 0.58);
+  font-size: 16px;
+  color: rgba(200, 216, 240, 0.95);
 }
 
 .metricValue {
   font-family: 'Space Mono', monospace;
-  font-size: 10px;
-  color: rgba(0, 200, 255, 0.82);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.luxValue {
+  color: #ffffff !important;
+}
+
+.blueValue {
+  color: #00c8ff !important;
 }

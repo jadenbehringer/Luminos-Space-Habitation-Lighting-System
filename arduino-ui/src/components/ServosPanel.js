@@ -31,7 +31,7 @@ export default function ServosPanel({ servoPositions, solarDelta, solarAlert }) 
               <span>0°</span>
               <span style={{
                 fontFamily: 'Space Mono, monospace',
-                color: servo.live ? '#00c8ff' : 'rgba(200,216,240,0.4)',
+                color: servo.live ? '#00c8ff' : 'rgba(200,216,240,0.85)',
               }}>
                 {pos}°
               </span>

@@ -24,11 +24,7 @@ export default function CrewPanel() {
             <div className={styles.meta}>
               Target lux: <span style={{ color: member.color, fontFamily: 'Space Mono, monospace' }}>{member.targetLux}</span>
             </div>
-            {member.active && (
-              <div className={styles.meta}>
-                Overrides: <span style={{ color: member.color, fontFamily: 'Space Mono, monospace' }}>{member.overrides}</span>
-              </div>
-            )}
+
           </div>
         );
       })}

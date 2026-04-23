@@ -90,7 +90,7 @@ export default function LightGauge({ lux, raw, circadian, fused }) {
           <div className={styles.statLabel}>Target lux</div>
           <div className={styles.statValue} style={{ color: '#00ff88' }}>320</div>
           {/* Delta from target — proximity-compatible: related values grouped */}
-          <div className={styles.statSub} style={{ color: delta === 0 ? 'rgba(0,255,136,0.5)' : delta > 0 ? '#ffc800' : '#a080ff' }}>
+          <div className={styles.statSub} style={{ color: delta === 0 ? 'rgba(0,255,136,0.85)' : delta > 0 ? '#ffc800' : '#a080ff' }}>
             {deltaStr} from target
           </div>
         </div>

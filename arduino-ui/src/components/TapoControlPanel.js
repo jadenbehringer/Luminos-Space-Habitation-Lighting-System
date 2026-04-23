@@ -28,10 +28,7 @@ export default function TapoControlPanel({ lux, bridgeData, writeSerial }) {
   }, [lux, windowFilter]);
 
   const t = Date.now() / 2000;
-  const minBlue = 3000 - (2800 * (effectiveFilter / 100));
-  const maxBlue = 3800 - (3400 * (effectiveFilter / 100));
-  const noise = Math.max(0, Math.min(1, (Math.sin(t) + Math.sin(t * 3.4 + 1.2)) / 4 + 0.5));
-  const currentBlueLightLevel = Math.round(minBlue + (maxBlue - minBlue) * noise);
+  const currentBlueLightLevel = Math.round(3500 - (3300 * (effectiveFilter / 100)));
 
   useEffect(() => {
     setBrightnessInput(String(Math.round(bridge.brightness ?? 0)));
@@ -62,79 +59,79 @@ export default function TapoControlPanel({ lux, bridgeData, writeSerial }) {
 
   return (
     <div className={styles.section}>
-      <div className={styles.controlsGrid}>
-        <form onSubmit={onTargetSubmit} className={styles.controlCard}>
-          <input
-            id="target-lux"
-            className={styles.bigInput}
-            type="number"
-            min="0"
-            max="2000"
-            value={targetInput}
-            onChange={(e) => setTargetInput(e.target.value)}
-            aria-label="Desired lux"
-          />
-          <button className={styles.btn} type="submit">Apply</button>
-          <div className={styles.panelName}>Desired lux</div>
-        </form>
+      <div className={styles.mainControlsRow}>
+        {/* Main Combined Control Card (Lux, Brightness, Auto) */}
+        <div className={styles.combinedCard}>
+          <div className={styles.cardHeader}>Main Control</div>
+          
+          <div className={styles.topRow}>
+            <form onSubmit={onTargetSubmit} className={styles.subControl}>
+              <div className={styles.panelName}>Desired lux</div>
+              <input
+                id="target-lux"
+                className={styles.bigInput}
+                type="number"
+                min="0"
+                max="2000"
+                value={targetInput}
+                onChange={(e) => setTargetInput(e.target.value)}
+                aria-label="Desired lux"
+              />
+              <button className={styles.btn} type="submit">Apply</button>
+            </form>
 
-        <form onSubmit={onBrightnessSubmit} className={styles.controlCard}>
-          <input
-            id="brightness"
-            className={styles.bigInput}
-            type="number"
-            min="0"
-            max="100"
-            value={brightnessInput}
-            onChange={(e) => setBrightnessInput(e.target.value)}
-            aria-label="Brightness"
-          />
-          <button className={styles.btn} type="submit" disabled={!bridgeReachable}>Apply</button>
-          <div className={styles.panelName}>Brightness</div>
-        </form>
+            <div className={styles.divider} />
 
-        <div className={styles.controlCard}>
-          <div className={styles.sliderValue}>{windowFilter}%</div>
-          <input
-            className={styles.slider}
-            type="range"
-            min="0"
-            max="100"
-            value={windowFilter}
-            onChange={onWindowFilterChange}
-            aria-label="Window filter status"
-          />
-          <div className={styles.panelName}>Window filter status</div>
+            <form onSubmit={onBrightnessSubmit} className={styles.subControl}>
+              <div className={styles.panelName}>Brightness</div>
+              <input
+                id="brightness"
+                className={styles.bigInput}
+                type="number"
+                min="0"
+                max="100"
+                value={brightnessInput}
+                onChange={(e) => setBrightnessInput(e.target.value)}
+                aria-label="Brightness"
+              />
+              <button className={styles.btn} type="submit" disabled={!bridgeReachable}>Apply</button>
+            </form>
+          </div>
+
+          <div className={styles.horizontalDivider} />
+
+          <div className={styles.bottomRow}>
+            <div className={styles.adaptiveInfo}>
+              <div className={styles.panelName}>Adaptive light control</div>
+              <div className={`${styles.autoState} ${!bridge.autoEnabled ? styles.disabledText : ''}`}>
+                {bridge.autoEnabled ? 'ENABLED' : 'DISABLED'}
+              </div>
+            </div>
+            <button
+              className={`${styles.toggleBtn} ${bridge.autoEnabled ? styles.negativeBtn : styles.enabledBtn}`}
+              type="button"
+              onClick={() => setAutoEnabled(!bridge.autoEnabled)}
+              disabled={!bridgeReachable}
+            >
+              {bridge.autoEnabled ? 'Disable' : 'Enable'}
+            </button>
+          </div>
         </div>
 
+        {/* Indoor Lighting Card */}
         <div className={styles.controlCard}>
-          <div className={styles.autoState}>
-            {bridge.autoEnabled ? 'Enabled' : 'Disabled'}
+          <div className={styles.panelName}>Indoor lighting</div>
+          <div className={`${styles.autoState} ${!bridge.powerOn ? styles.disabledText : ''}`}>
+            {bridge.powerOn ? 'ON' : 'OFF'}
           </div>
           <button
-            className={`${styles.btn} ${bridge.autoEnabled ? styles.enabledBtn : ''}`}
-            type="button"
-            onClick={() => setAutoEnabled(!bridge.autoEnabled)}
-            disabled={!bridgeReachable}
-          >
-            {bridge.autoEnabled ? 'Disable' : 'Enable'}
-          </button>
-          <div className={styles.panelName}>Adaptive light control</div>
-        </div>
-
-        <div className={styles.controlCard}>
-          <div className={styles.autoState}>
-            {bridge.powerOn ? 'On' : 'Off'}
-          </div>
-          <button
-            className={`${styles.btn} ${bridge.powerOn ? styles.enabledBtn : ''}`}
+            className={`${styles.toggleBtn} ${bridge.powerOn ? styles.negativeBtn : styles.powerOnBtn}`}
             type="button"
             onClick={() => setPower(!bridge.powerOn)}
             disabled={!bridgeReachable}
           >
             Turn {bridge.powerOn ? 'Off' : 'On'}
           </button>
-          <div className={styles.panelName}>Bulb power</div>
         </div>
       </div>
 
@@ -145,8 +142,23 @@ export default function TapoControlPanel({ lux, bridgeData, writeSerial }) {
             <div className={styles.panelName}>Current lux</div>
           </div>
           <div className={styles.currentStat}>
-            <div className={styles.currentLuxValue}>{currentBlueLightLevel}</div>
+            <div className={`${styles.currentLuxValue} ${styles.blueText}`}>{currentBlueLightLevel}</div>
             <div className={styles.panelName}>Blue light level</div>
+          </div>
+          <div className={styles.currentStat}>
+            <div className={styles.sliderContainer}>
+              <div className={styles.sliderValue}>{windowFilter}%</div>
+              <input
+                className={styles.slider}
+                type="range"
+                min="0"
+                max="100"
+                value={windowFilter}
+                onChange={onWindowFilterChange}
+                aria-label="Window filter status"
+              />
+            </div>
+            <div className={styles.panelName}>Blue light filter slider</div>
           </div>
         </div>
       </div>

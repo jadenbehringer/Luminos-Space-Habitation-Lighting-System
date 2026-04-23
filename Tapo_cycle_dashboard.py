@@ -1,23 +1,66 @@
 import asyncio
+import concurrent.futures
 from collections import deque
 import json
+import logging
 import math
 import os
+import socket
 import threading
 import time
+import traceback
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from tapo import ApiClient
 
 USERNAME = "airbornjerry@gmail.com"
 PASSWORD = "AERO_636"
 IP_ADDRESS = "172.20.10.2"
+IP_ADDRESS_LIST = [IP_ADDRESS]
+
+
+def _configure_logging():
+    level_name = os.getenv("TAPO_LOG_LEVEL", "DEBUG").upper()
+    level = getattr(logging, level_name, logging.DEBUG)
+    log_file = os.getenv("TAPO_LOG_FILE", "tapo_bridge.log")
+
+    logger = logging.getLogger("tapo_bridge")
+    if logger.handlers:
+        return logger
+
+    logger.setLevel(level)
+    formatter = logging.Formatter(
+        "%(asctime)s | %(levelname)s | %(threadName)s | %(name)s | %(message)s"
+    )
+
+    stream_handler = logging.StreamHandler()
+    stream_handler.setLevel(level)
+    stream_handler.setFormatter(formatter)
+    logger.addHandler(stream_handler)
+
+    try:
+        file_handler = logging.FileHandler(log_file)
+        file_handler.setLevel(level)
+        file_handler.setFormatter(formatter)
+        logger.addHandler(file_handler)
+    except Exception:
+        logger.warning("Could not open log file '%s'; continuing with console-only logs", log_file)
+
+    logger.propagate = False
+    logger.info("Logging initialized level=%s file=%s", logging.getLevelName(level), log_file)
+    return logger
+
+
+LOGGER = _configure_logging()
 
 
 class TapoLuxController:
     def __init__(self):
         self.username = USERNAME
         self.password = PASSWORD
-        self.ip_address = IP_ADDRESS
+        self.ip_addresses = IP_ADDRESS_LIST
+
+        self.connect_timeout_s = float(os.getenv("TAPO_CONNECT_TIMEOUT_S", "10"))
+        self.connect_retries = int(os.getenv("TAPO_CONNECT_RETRIES", "3"))
 
         self.control_interval_s = float(os.getenv("TAPO_CONTROL_INTERVAL_S", "0.04"))
         self.tolerance_lux = float(os.getenv("TAPO_TOLERANCE_LUX", "25.0"))
@@ -55,36 +98,119 @@ class TapoLuxController:
             "toleranceLux": self.tolerance_lux,
             "lastAction": "idle",
             "lastError": None,
+            "connectedIp": None,
         }
 
         self.loop = asyncio.new_event_loop()
         self._thread = threading.Thread(target=self._loop_thread, daemon=True)
         self._thread.start()
+        LOGGER.info(
+            "Controller initialized ips=%s retries=%s timeout_s=%.2f control_interval_s=%.3f",
+            self.ip_addresses,
+            self.connect_retries,
+            self.connect_timeout_s,
+            self.control_interval_s,
+        )
+
+    def _build_connect_diagnostics(self, ip):
+        diagnostics = {
+            "targetIp": ip,
+            "hostname": socket.gethostname(),
+            "resolvedTarget": None,
+            "localRouteIp": None,
+            "tcp80Reachable": False,
+            "tcp443Reachable": False,
+        }
+
+        try:
+            diagnostics["resolvedTarget"] = socket.gethostbyname(ip)
+        except Exception as exc:
+            diagnostics["resolvedTarget"] = f"resolve failed: {exc}"
+
+        try:
+            probe = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            probe.settimeout(1.0)
+            probe.connect((ip, 1))
+            diagnostics["localRouteIp"] = probe.getsockname()[0]
+            probe.close()
+        except Exception as exc:
+            diagnostics["localRouteIp"] = f"route probe failed: {exc}"
+
+        for port, key in ((80, "tcp80Reachable"), (443, "tcp443Reachable")):
+            try:
+                with socket.create_connection((ip, port), timeout=1.5):
+                    diagnostics[key] = True
+            except Exception:
+                diagnostics[key] = False
+
+        return diagnostics
 
     def _loop_thread(self):
         asyncio.set_event_loop(self.loop)
         self.loop.create_task(self._control_loop())
         self.loop.run_forever()
 
-    async def _connect_device(self, timeout_s=10, retries=3):
+    async def _connect_device(self, timeout_s=None, retries=None):
+        timeout_s = float(timeout_s or self.connect_timeout_s)
+        retries = int(retries or self.connect_retries)
+
         client = ApiClient(self.username, self.password)
         last_exc = None
 
+        targets = tuple(self.ip_addresses)
+
         for attempt in range(1, retries + 1):
-            try:
-                device = await asyncio.wait_for(client.l530(self.ip_address), timeout=timeout_s)
-                with self._lock:
-                    self.state["online"] = True
-                    self.state["lastError"] = None
-                return device
-            except Exception as exc:
-                last_exc = exc
-                with self._lock:
-                    self.state["online"] = False
-                    self.state["lastError"] = f"connect attempt {attempt} failed: {exc}"
+            for ip in targets:
+                diagnostics = self._build_connect_diagnostics(ip)
+                LOGGER.info(
+                    "Connect attempt %s/%s to ip=%s diagnostics=%s",
+                    attempt,
+                    retries,
+                    ip,
+                    json.dumps(diagnostics, sort_keys=True),
+                )
+                try:
+                    device = await asyncio.wait_for(client.l530(ip), timeout=timeout_s)
+                    with self._lock:
+                        self.state["online"] = True
+                        self.state["connectedIp"] = ip
+                        self.state["lastError"] = None
+                    LOGGER.info("Connected to bulb ip=%s on attempt=%s", ip, attempt)
+                    return device
+                except asyncio.TimeoutError:
+                    last_exc = RuntimeError(f"timeout after {timeout_s}s to {ip}")
+                    LOGGER.warning("Timeout connecting to ip=%s timeout_s=%.2f", ip, timeout_s)
+                except Exception as exc:
+                    last_exc = exc
+                    LOGGER.error(
+                        "Connection exception ip=%s type=%s message=%s",
+                        ip,
+                        type(exc).__name__,
+                        exc,
+                    )
+                    LOGGER.debug("Traceback for connection failure:\n%s", traceback.format_exc())
+
+            msg = (
+                f"connect attempt {attempt} failed: {last_exc}. "
+                "Check hardcoded bulb IP, same Wi-Fi/subnet, and TP-Link credentials."
+            )
+            with self._lock:
+                self.state["online"] = False
+                self.state["lastError"] = msg
+            LOGGER.warning(msg)
+
+            if attempt < retries:
                 await asyncio.sleep(1)
 
-        raise RuntimeError(f"Unable to connect to Tapo device: {last_exc}")
+        LOGGER.error(
+            "All connection attempts failed retries=%s targets=%s last_error=%s",
+            retries,
+            list(targets),
+            last_exc,
+        )
+        raise RuntimeError(
+            f"Unable to connect to Tapo bulb after {retries} attempts across {len(targets)} IP(s): {last_exc}"
+        )
 
     async def _ensure_device(self):
         if self._device is None:
@@ -124,6 +250,8 @@ class TapoLuxController:
             future.result(timeout=8)
             return True, None
         except Exception as exc:
+            LOGGER.error("apply_brightness failed brightness=%s error=%s", brightness, exc)
+            LOGGER.debug("Traceback for apply_brightness failure:\n%s", traceback.format_exc())
             with self._lock:
                 self._device = None
                 self.state["online"] = False
@@ -136,6 +264,8 @@ class TapoLuxController:
             future.result(timeout=8)
             return True, None
         except Exception as exc:
+            LOGGER.error("set_power failed on=%s error=%s", bool(on), exc)
+            LOGGER.debug("Traceback for set_power failure:\n%s", traceback.format_exc())
             with self._lock:
                 self._device = None
                 self.state["online"] = False
@@ -221,6 +351,8 @@ class TapoLuxController:
                 self._last_controlled_sensor_ts = last_sensor_ts
                 self._last_direction = direction
             except Exception as exc:
+                LOGGER.error("control loop brightness apply failed next=%s error=%s", next_brightness, exc)
+                LOGGER.debug("Traceback for control loop failure:\n%s", traceback.format_exc())
                 with self._lock:
                     self._device = None
                     self.state["online"] = False
@@ -245,6 +377,45 @@ class TapoLuxController:
         with self._lock:
             self.state["autoEnabled"] = bool(enabled)
             self.state["lastAction"] = "auto enabled" if enabled else "auto disabled"
+
+    def enable_auto_with_connect(self):
+        future = asyncio.run_coroutine_threadsafe(self._ensure_device(), self.loop)
+        per_round = self.connect_timeout_s * max(1, len(self.ip_addresses))
+        retry_gaps = max(0, self.connect_retries - 1) * 1.0
+        timeout = max(8.0, (per_round * self.connect_retries) + retry_gaps + 3.0)
+        try:
+            future.result(timeout=timeout)
+            with self._lock:
+                self.state["autoEnabled"] = True
+                self.state["online"] = True
+                self.state["lastAction"] = "auto enabled (connection verified)"
+                self.state["lastError"] = None
+            LOGGER.info("Auto enable succeeded; connection verified before activation")
+            return True, None
+        except concurrent.futures.TimeoutError:
+            future.cancel()
+            msg = (
+                f"Auto enable connect-check timed out after {timeout:.1f}s "
+                f"(retries={self.connect_retries}, ips={len(self.ip_addresses)})."
+            )
+            LOGGER.error(msg)
+            with self._lock:
+                self._device = None
+                self.state["autoEnabled"] = False
+                self.state["online"] = False
+                self.state["lastAction"] = "auto enable failed"
+                self.state["lastError"] = msg
+            return False, msg
+        except Exception as exc:
+            LOGGER.error("Auto enable failed; connection could not be verified: %s", exc)
+            LOGGER.debug("Traceback for auto enable connection failure:\n%s", traceback.format_exc())
+            with self._lock:
+                self._device = None
+                self.state["autoEnabled"] = False
+                self.state["online"] = False
+                self.state["lastAction"] = "auto enable failed"
+                self.state["lastError"] = str(exc)
+            return False, str(exc)
 
 
 controller = TapoLuxController()
@@ -306,7 +477,14 @@ def make_handler(ctrl):
 
             if self.path == "/auto":
                 enabled = data.get("enabled")
-                ctrl.set_auto(bool(enabled))
+                enabled = bool(enabled)
+                if enabled:
+                    ok, err = ctrl.enable_auto_with_connect()
+                    if not ok:
+                        self._send_json(500, {"ok": False, "error": err, "state": ctrl.get_state()})
+                        return
+                else:
+                    ctrl.set_auto(False)
                 self._send_json(200, {"ok": True, "state": ctrl.get_state()})
                 return
 
@@ -347,15 +525,16 @@ def main():
     port = int(os.getenv("TAPO_BRIDGE_PORT", "8765"))
 
     server = ThreadingHTTPServer((host, port), make_handler(controller))
-    print(f"Tapo bridge listening on http://{host}:{port}")
-    print("Endpoints: GET /state, POST /sensor, POST /target, POST /auto, POST /brightness, POST /power")
+    LOGGER.info("Tapo bridge listening on http://%s:%s", host, port)
+    LOGGER.info("Endpoints: GET /state, POST /sensor, POST /target, POST /auto, POST /brightness, POST /power")
 
     try:
         server.serve_forever()
     except KeyboardInterrupt:
-        pass
+        LOGGER.info("KeyboardInterrupt received; shutting down server")
     finally:
         server.server_close()
+        LOGGER.info("Server closed")
 
 
 if __name__ == "__main__":

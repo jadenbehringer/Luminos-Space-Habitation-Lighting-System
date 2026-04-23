@@ -1,0 +1,486 @@
+2026-04-23 09:54:33,121 | INFO | MainThread | tapo_bridge | Logging initialized level=DEBUG file=tapo_bridge.log
+2026-04-23 09:54:33,121 | INFO | MainThread | tapo_bridge | Controller initialized ips=['172.20.10.2'] retries=3 timeout_s=10.00 control_interval_s=0.040
+2026-04-23 09:54:33,130 | INFO | MainThread | tapo_bridge | Tapo bridge listening on http://127.0.0.1:8765
+2026-04-23 09:54:33,130 | INFO | MainThread | tapo_bridge | Endpoints: GET /state, POST /sensor, POST /target, POST /auto, POST /brightness, POST /power
+2026-04-23 09:57:44,652 | INFO | MainThread | tapo_bridge | KeyboardInterrupt received; shutting down server
+2026-04-23 09:57:44,654 | INFO | MainThread | tapo_bridge | Server closed
+2026-04-23 09:59:27,978 | INFO | MainThread | tapo_bridge | Logging initialized level=DEBUG file=tapo_bridge.log
+2026-04-23 09:59:27,979 | INFO | MainThread | tapo_bridge | Controller initialized ips=['172.20.10.2'] retries=3 timeout_s=10.00 control_interval_s=0.040
+2026-04-23 09:59:27,987 | INFO | MainThread | tapo_bridge | Tapo bridge listening on http://127.0.0.1:8765
+2026-04-23 09:59:27,987 | INFO | MainThread | tapo_bridge | Endpoints: GET /state, POST /sensor, POST /target, POST /auto, POST /brightness, POST /power
+2026-04-23 09:59:35,791 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connect attempt 1/3 to ip=172.20.10.2 diagnostics={"hostname": "Jadens-MacBook-Air-73.local", "localRouteIp": "172.20.10.3", "resolvedTarget": "172.20.10.2", "targetIp": "172.20.10.2", "tcp443Reachable": false, "tcp80Reachable": false}
+2026-04-23 09:59:44,788 | ERROR | Thread-70 (process_request_thread) | tapo_bridge | Auto enable failed; connection could not be verified: 
+2026-04-23 09:59:44,792 | DEBUG | Thread-70 (process_request_thread) | tapo_bridge | Traceback for auto enable connection failure:
+Traceback (most recent call last):
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 384, in enable_auto_with_connect
+    future.result(timeout=timeout)
+  File "/Users/jadenbehringer/.pyenv/versions/3.12.12/lib/python3.12/concurrent/futures/_base.py", line 458, in result
+    raise TimeoutError()
+TimeoutError
+
+2026-04-23 09:59:45,794 | WARNING | Thread-1 (_loop_thread) | tapo_bridge | Timeout connecting to ip=172.20.10.2 timeout_s=10.00
+2026-04-23 09:59:45,794 | WARNING | Thread-1 (_loop_thread) | tapo_bridge | connect attempt 1 failed: timeout after 10.0s to 172.20.10.2. Check hardcoded bulb IP, same Wi-Fi/subnet, and TP-Link credentials.
+2026-04-23 09:59:46,797 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connect attempt 2/3 to ip=172.20.10.2 diagnostics={"hostname": "Jadens-MacBook-Air-73.local", "localRouteIp": "172.20.10.3", "resolvedTarget": "172.20.10.2", "targetIp": "172.20.10.2", "tcp443Reachable": false, "tcp80Reachable": false}
+2026-04-23 09:59:46,802 | ERROR | Thread-1 (_loop_thread) | tapo_bridge | Connection exception ip=172.20.10.2 type=Exception message=Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+2026-04-23 09:59:46,804 | DEBUG | Thread-1 (_loop_thread) | tapo_bridge | Traceback for connection failure:
+Traceback (most recent call last):
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 172, in _connect_device
+    device = await asyncio.wait_for(client.l530(ip), timeout=timeout_s)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jadenbehringer/.pyenv/versions/3.12.12/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+Exception: Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+
+2026-04-23 09:59:46,804 | WARNING | Thread-1 (_loop_thread) | tapo_bridge | connect attempt 2 failed: Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) }). Check hardcoded bulb IP, same Wi-Fi/subnet, and TP-Link credentials.
+2026-04-23 09:59:47,805 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connect attempt 3/3 to ip=172.20.10.2 diagnostics={"hostname": "Jadens-MacBook-Air-73.local", "localRouteIp": "172.20.10.3", "resolvedTarget": "172.20.10.2", "targetIp": "172.20.10.2", "tcp443Reachable": false, "tcp80Reachable": false}
+2026-04-23 09:59:47,806 | ERROR | Thread-1 (_loop_thread) | tapo_bridge | Connection exception ip=172.20.10.2 type=Exception message=Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+2026-04-23 09:59:47,806 | DEBUG | Thread-1 (_loop_thread) | tapo_bridge | Traceback for connection failure:
+Traceback (most recent call last):
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 172, in _connect_device
+    device = await asyncio.wait_for(client.l530(ip), timeout=timeout_s)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jadenbehringer/.pyenv/versions/3.12.12/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+Exception: Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+
+2026-04-23 09:59:47,806 | WARNING | Thread-1 (_loop_thread) | tapo_bridge | connect attempt 3 failed: Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) }). Check hardcoded bulb IP, same Wi-Fi/subnet, and TP-Link credentials.
+2026-04-23 09:59:47,806 | ERROR | Thread-1 (_loop_thread) | tapo_bridge | All connection attempts failed retries=3 targets=['172.20.10.2'] last_error=Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+2026-04-23 10:03:55,808 | INFO | MainThread | tapo_bridge | Logging initialized level=DEBUG file=tapo_bridge.log
+2026-04-23 10:03:55,809 | INFO | MainThread | tapo_bridge | Controller initialized ips=['172.20.10.2'] retries=3 timeout_s=10.00 control_interval_s=0.040
+2026-04-23 10:03:56,856 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connect attempt 1/3 to ip=172.20.10.2 diagnostics={"hostname": "Jadens-MacBook-Air-73.local", "localRouteIp": "172.20.10.3", "resolvedTarget": "172.20.10.2", "targetIp": "172.20.10.2", "tcp443Reachable": false, "tcp80Reachable": true}
+2026-04-23 10:03:57,093 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connected to bulb ip=172.20.10.2 on attempt=1
+2026-04-23 10:03:57,094 | INFO | MainThread | tapo_bridge | Auto enable succeeded; connection verified before activation
+2026-04-23 10:04:21,317 | INFO | MainThread | tapo_bridge | KeyboardInterrupt received; shutting down server
+2026-04-23 10:04:21,318 | INFO | MainThread | tapo_bridge | Server closed
+2026-04-23 10:04:59,672 | INFO | MainThread | tapo_bridge | Logging initialized level=DEBUG file=tapo_bridge.log
+2026-04-23 10:04:59,672 | INFO | MainThread | tapo_bridge | Controller initialized ips=['172.20.10.2'] retries=3 timeout_s=10.00 control_interval_s=0.040
+2026-04-23 10:04:59,680 | INFO | MainThread | tapo_bridge | Tapo bridge listening on http://127.0.0.1:8765
+2026-04-23 10:04:59,680 | INFO | MainThread | tapo_bridge | Endpoints: GET /state, POST /sensor, POST /target, POST /auto, POST /brightness, POST /power
+2026-04-23 10:05:07,192 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connect attempt 1/3 to ip=172.20.10.2 diagnostics={"hostname": "Jadens-MacBook-Air-73.local", "localRouteIp": "172.20.10.3", "resolvedTarget": "172.20.10.2", "targetIp": "172.20.10.2", "tcp443Reachable": false, "tcp80Reachable": true}
+2026-04-23 10:05:07,252 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connected to bulb ip=172.20.10.2 on attempt=1
+2026-04-23 10:05:07,253 | INFO | Thread-109 (process_request_thread) | tapo_bridge | Auto enable succeeded; connection verified before activation
+2026-04-23 10:18:28,919 | INFO | MainThread | tapo_bridge | KeyboardInterrupt received; shutting down server
+2026-04-23 10:18:28,922 | INFO | MainThread | tapo_bridge | Server closed
+2026-04-23 10:18:32,075 | INFO | MainThread | tapo_bridge | Logging initialized level=DEBUG file=tapo_bridge.log
+2026-04-23 10:18:32,075 | INFO | MainThread | tapo_bridge | Controller initialized ips=['172.20.10.2'] retries=3 timeout_s=10.00 control_interval_s=0.040
+2026-04-23 10:18:32,080 | INFO | MainThread | tapo_bridge | Tapo bridge listening on http://127.0.0.1:8765
+2026-04-23 10:18:32,080 | INFO | MainThread | tapo_bridge | Endpoints: GET /state, POST /sensor, POST /target, POST /auto, POST /brightness, POST /power
+2026-04-23 10:18:37,470 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connect attempt 1/3 to ip=172.20.10.2 diagnostics={"hostname": "Jadens-MacBook-Air-73.local", "localRouteIp": "172.20.10.3", "resolvedTarget": "172.20.10.2", "targetIp": "172.20.10.2", "tcp443Reachable": false, "tcp80Reachable": true}
+2026-04-23 10:18:37,549 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connected to bulb ip=172.20.10.2 on attempt=1
+2026-04-23 10:18:37,549 | INFO | Thread-85 (process_request_thread) | tapo_bridge | Auto enable succeeded; connection verified before activation
+2026-04-23 10:29:38,296 | ERROR | Thread-1 (_loop_thread) | tapo_bridge | control loop brightness apply failed next=55 error=Tapo(SessionTimeout)
+2026-04-23 10:29:38,303 | DEBUG | Thread-1 (_loop_thread) | tapo_bridge | Traceback for control loop failure:
+Traceback (most recent call last):
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 349, in _control_loop
+    await self._apply_brightness_async(next_brightness)
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 223, in _apply_brightness_async
+    await device.on()
+Exception: Tapo(SessionTimeout)
+
+2026-04-23 10:29:39,418 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connect attempt 1/3 to ip=172.20.10.2 diagnostics={"hostname": "Jadens-MacBook-Air-73.local", "localRouteIp": "172.20.10.3", "resolvedTarget": "172.20.10.2", "targetIp": "172.20.10.2", "tcp443Reachable": false, "tcp80Reachable": true}
+2026-04-23 10:29:39,496 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connected to bulb ip=172.20.10.2 on attempt=1
+2026-04-23 10:31:24,132 | ERROR | Thread-1 (_loop_thread) | tapo_bridge | control loop brightness apply failed next=88 error=Tapo(SessionTimeout)
+2026-04-23 10:31:24,137 | DEBUG | Thread-1 (_loop_thread) | tapo_bridge | Traceback for control loop failure:
+Traceback (most recent call last):
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 349, in _control_loop
+    await self._apply_brightness_async(next_brightness)
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 223, in _apply_brightness_async
+    await device.on()
+Exception: Tapo(SessionTimeout)
+
+2026-04-23 10:31:24,577 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connect attempt 1/3 to ip=172.20.10.2 diagnostics={"hostname": "Jadens-MacBook-Air-73.local", "localRouteIp": "172.20.10.3", "resolvedTarget": "172.20.10.2", "targetIp": "172.20.10.2", "tcp443Reachable": false, "tcp80Reachable": true}
+2026-04-23 10:31:24,684 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connected to bulb ip=172.20.10.2 on attempt=1
+2026-04-23 10:31:24,956 | ERROR | Thread-1 (_loop_thread) | tapo_bridge | control loop brightness apply failed next=86 error=Tapo(SessionTimeout)
+2026-04-23 10:31:24,958 | DEBUG | Thread-1 (_loop_thread) | tapo_bridge | Traceback for control loop failure:
+Traceback (most recent call last):
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 349, in _control_loop
+    await self._apply_brightness_async(next_brightness)
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 225, in _apply_brightness_async
+    await device.set_color_temperature(self.color_temp)
+Exception: Tapo(SessionTimeout)
+
+2026-04-23 10:31:25,408 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connect attempt 1/3 to ip=172.20.10.2 diagnostics={"hostname": "Jadens-MacBook-Air-73.local", "localRouteIp": "172.20.10.3", "resolvedTarget": "172.20.10.2", "targetIp": "172.20.10.2", "tcp443Reachable": false, "tcp80Reachable": true}
+2026-04-23 10:31:25,458 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connected to bulb ip=172.20.10.2 on attempt=1
+2026-04-23 10:31:35,681 | ERROR | Thread-1 (_loop_thread) | tapo_bridge | control loop brightness apply failed next=45 error=Tapo(SessionTimeout)
+2026-04-23 10:31:35,682 | DEBUG | Thread-1 (_loop_thread) | tapo_bridge | Traceback for control loop failure:
+Traceback (most recent call last):
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 349, in _control_loop
+    await self._apply_brightness_async(next_brightness)
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 223, in _apply_brightness_async
+    await device.on()
+Exception: Tapo(SessionTimeout)
+
+2026-04-23 10:31:36,126 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connect attempt 1/3 to ip=172.20.10.2 diagnostics={"hostname": "Jadens-MacBook-Air-73.local", "localRouteIp": "172.20.10.3", "resolvedTarget": "172.20.10.2", "targetIp": "172.20.10.2", "tcp443Reachable": false, "tcp80Reachable": true}
+2026-04-23 10:31:36,186 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connected to bulb ip=172.20.10.2 on attempt=1
+2026-04-23 10:31:45,992 | ERROR | Thread-1 (_loop_thread) | tapo_bridge | control loop brightness apply failed next=16 error=Tapo(SessionTimeout)
+2026-04-23 10:31:45,995 | DEBUG | Thread-1 (_loop_thread) | tapo_bridge | Traceback for control loop failure:
+Traceback (most recent call last):
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 349, in _control_loop
+    await self._apply_brightness_async(next_brightness)
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 223, in _apply_brightness_async
+    await device.on()
+Exception: Tapo(SessionTimeout)
+
+2026-04-23 10:31:46,546 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connect attempt 1/3 to ip=172.20.10.2 diagnostics={"hostname": "Jadens-MacBook-Air-73.local", "localRouteIp": "172.20.10.3", "resolvedTarget": "172.20.10.2", "targetIp": "172.20.10.2", "tcp443Reachable": false, "tcp80Reachable": true}
+2026-04-23 10:31:47,393 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connected to bulb ip=172.20.10.2 on attempt=1
+2026-04-23 10:31:53,459 | ERROR | Thread-1 (_loop_thread) | tapo_bridge | control loop brightness apply failed next=9 error=Tapo(SessionTimeout)
+2026-04-23 10:31:53,463 | DEBUG | Thread-1 (_loop_thread) | tapo_bridge | Traceback for control loop failure:
+Traceback (most recent call last):
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 349, in _control_loop
+    await self._apply_brightness_async(next_brightness)
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 223, in _apply_brightness_async
+    await device.on()
+Exception: Tapo(SessionTimeout)
+
+2026-04-23 10:31:53,897 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connect attempt 1/3 to ip=172.20.10.2 diagnostics={"hostname": "Jadens-MacBook-Air-73.local", "localRouteIp": "172.20.10.3", "resolvedTarget": "172.20.10.2", "targetIp": "172.20.10.2", "tcp443Reachable": false, "tcp80Reachable": true}
+2026-04-23 10:31:53,959 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connected to bulb ip=172.20.10.2 on attempt=1
+2026-04-23 10:31:56,588 | ERROR | Thread-1 (_loop_thread) | tapo_bridge | control loop brightness apply failed next=7 error=Tapo(SessionTimeout)
+2026-04-23 10:31:56,589 | DEBUG | Thread-1 (_loop_thread) | tapo_bridge | Traceback for control loop failure:
+Traceback (most recent call last):
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 349, in _control_loop
+    await self._apply_brightness_async(next_brightness)
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 223, in _apply_brightness_async
+    await device.on()
+Exception: Tapo(SessionTimeout)
+
+2026-04-23 10:31:57,057 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connect attempt 1/3 to ip=172.20.10.2 diagnostics={"hostname": "Jadens-MacBook-Air-73.local", "localRouteIp": "172.20.10.3", "resolvedTarget": "172.20.10.2", "targetIp": "172.20.10.2", "tcp443Reachable": false, "tcp80Reachable": true}
+2026-04-23 10:31:57,175 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connected to bulb ip=172.20.10.2 on attempt=1
+2026-04-23 10:32:32,780 | ERROR | Thread-1 (_loop_thread) | tapo_bridge | control loop brightness apply failed next=3 error=Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app/request?seq=430493620", source: TimedOut })
+2026-04-23 10:32:32,783 | DEBUG | Thread-1 (_loop_thread) | tapo_bridge | Traceback for control loop failure:
+Traceback (most recent call last):
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 349, in _control_loop
+    await self._apply_brightness_async(next_brightness)
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 223, in _apply_brightness_async
+    await device.on()
+Exception: Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app/request?seq=430493620", source: TimedOut })
+
+2026-04-23 10:32:35,832 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connect attempt 1/3 to ip=172.20.10.2 diagnostics={"hostname": "Jadens-MacBook-Air-73.local", "localRouteIp": "172.20.10.3", "resolvedTarget": "172.20.10.2", "targetIp": "172.20.10.2", "tcp443Reachable": false, "tcp80Reachable": false}
+2026-04-23 10:32:45,837 | WARNING | Thread-1 (_loop_thread) | tapo_bridge | Timeout connecting to ip=172.20.10.2 timeout_s=10.00
+2026-04-23 10:32:45,837 | WARNING | Thread-1 (_loop_thread) | tapo_bridge | connect attempt 1 failed: timeout after 10.0s to 172.20.10.2. Check hardcoded bulb IP, same Wi-Fi/subnet, and TP-Link credentials.
+2026-04-23 10:32:49,843 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connect attempt 2/3 to ip=172.20.10.2 diagnostics={"hostname": "Jadens-MacBook-Air-73.local", "localRouteIp": "172.20.10.3", "resolvedTarget": "172.20.10.2", "targetIp": "172.20.10.2", "tcp443Reachable": false, "tcp80Reachable": false}
+2026-04-23 10:32:59,844 | WARNING | Thread-1 (_loop_thread) | tapo_bridge | Timeout connecting to ip=172.20.10.2 timeout_s=10.00
+2026-04-23 10:32:59,846 | WARNING | Thread-1 (_loop_thread) | tapo_bridge | connect attempt 2 failed: timeout after 10.0s to 172.20.10.2. Check hardcoded bulb IP, same Wi-Fi/subnet, and TP-Link credentials.
+2026-04-23 10:33:03,850 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connect attempt 3/3 to ip=172.20.10.2 diagnostics={"hostname": "Jadens-MacBook-Air-73.local", "localRouteIp": "172.20.10.3", "resolvedTarget": "172.20.10.2", "targetIp": "172.20.10.2", "tcp443Reachable": false, "tcp80Reachable": false}
+2026-04-23 10:33:13,852 | WARNING | Thread-1 (_loop_thread) | tapo_bridge | Timeout connecting to ip=172.20.10.2 timeout_s=10.00
+2026-04-23 10:33:13,852 | WARNING | Thread-1 (_loop_thread) | tapo_bridge | connect attempt 3 failed: timeout after 10.0s to 172.20.10.2. Check hardcoded bulb IP, same Wi-Fi/subnet, and TP-Link credentials.
+2026-04-23 10:33:13,853 | ERROR | Thread-1 (_loop_thread) | tapo_bridge | All connection attempts failed retries=3 targets=['172.20.10.2'] last_error=timeout after 10.0s to 172.20.10.2
+2026-04-23 10:33:13,853 | ERROR | Thread-1 (_loop_thread) | tapo_bridge | control loop brightness apply failed next=3 error=Unable to connect to Tapo bulb after 3 attempts across 1 IP(s): timeout after 10.0s to 172.20.10.2
+2026-04-23 10:33:13,855 | DEBUG | Thread-1 (_loop_thread) | tapo_bridge | Traceback for control loop failure:
+Traceback (most recent call last):
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 349, in _control_loop
+    await self._apply_brightness_async(next_brightness)
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 222, in _apply_brightness_async
+    device = await self._ensure_device()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 217, in _ensure_device
+    self._device = await self._connect_device()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 211, in _connect_device
+    raise RuntimeError(
+RuntimeError: Unable to connect to Tapo bulb after 3 attempts across 1 IP(s): timeout after 10.0s to 172.20.10.2
+
+2026-04-23 10:33:13,897 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connect attempt 1/3 to ip=172.20.10.2 diagnostics={"hostname": "Jadens-MacBook-Air-73.local", "localRouteIp": "172.20.10.3", "resolvedTarget": "172.20.10.2", "targetIp": "172.20.10.2", "tcp443Reachable": false, "tcp80Reachable": false}
+2026-04-23 10:33:13,898 | ERROR | Thread-1 (_loop_thread) | tapo_bridge | Connection exception ip=172.20.10.2 type=Exception message=Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+2026-04-23 10:33:13,900 | DEBUG | Thread-1 (_loop_thread) | tapo_bridge | Traceback for connection failure:
+Traceback (most recent call last):
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 173, in _connect_device
+    device = await asyncio.wait_for(client.l530(ip), timeout=timeout_s)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jadenbehringer/.pyenv/versions/3.12.12/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+Exception: Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+
+2026-04-23 10:33:13,901 | WARNING | Thread-1 (_loop_thread) | tapo_bridge | connect attempt 1 failed: Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) }). Check hardcoded bulb IP, same Wi-Fi/subnet, and TP-Link credentials.
+2026-04-23 10:33:14,903 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connect attempt 2/3 to ip=172.20.10.2 diagnostics={"hostname": "Jadens-MacBook-Air-73.local", "localRouteIp": "172.20.10.3", "resolvedTarget": "172.20.10.2", "targetIp": "172.20.10.2", "tcp443Reachable": false, "tcp80Reachable": false}
+2026-04-23 10:33:14,903 | ERROR | Thread-1 (_loop_thread) | tapo_bridge | Connection exception ip=172.20.10.2 type=Exception message=Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+2026-04-23 10:33:14,904 | DEBUG | Thread-1 (_loop_thread) | tapo_bridge | Traceback for connection failure:
+Traceback (most recent call last):
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 173, in _connect_device
+    device = await asyncio.wait_for(client.l530(ip), timeout=timeout_s)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jadenbehringer/.pyenv/versions/3.12.12/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+Exception: Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+
+2026-04-23 10:33:14,904 | WARNING | Thread-1 (_loop_thread) | tapo_bridge | connect attempt 2 failed: Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) }). Check hardcoded bulb IP, same Wi-Fi/subnet, and TP-Link credentials.
+2026-04-23 10:33:15,906 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connect attempt 3/3 to ip=172.20.10.2 diagnostics={"hostname": "Jadens-MacBook-Air-73.local", "localRouteIp": "172.20.10.3", "resolvedTarget": "172.20.10.2", "targetIp": "172.20.10.2", "tcp443Reachable": false, "tcp80Reachable": false}
+2026-04-23 10:33:15,907 | ERROR | Thread-1 (_loop_thread) | tapo_bridge | Connection exception ip=172.20.10.2 type=Exception message=Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+2026-04-23 10:33:15,908 | DEBUG | Thread-1 (_loop_thread) | tapo_bridge | Traceback for connection failure:
+Traceback (most recent call last):
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 173, in _connect_device
+    device = await asyncio.wait_for(client.l530(ip), timeout=timeout_s)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jadenbehringer/.pyenv/versions/3.12.12/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+Exception: Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+
+2026-04-23 10:33:15,908 | WARNING | Thread-1 (_loop_thread) | tapo_bridge | connect attempt 3 failed: Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) }). Check hardcoded bulb IP, same Wi-Fi/subnet, and TP-Link credentials.
+2026-04-23 10:33:15,908 | ERROR | Thread-1 (_loop_thread) | tapo_bridge | All connection attempts failed retries=3 targets=['172.20.10.2'] last_error=Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+2026-04-23 10:33:15,908 | ERROR | Thread-1 (_loop_thread) | tapo_bridge | control loop brightness apply failed next=3 error=Unable to connect to Tapo bulb after 3 attempts across 1 IP(s): Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+2026-04-23 10:33:15,908 | DEBUG | Thread-1 (_loop_thread) | tapo_bridge | Traceback for control loop failure:
+Traceback (most recent call last):
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 349, in _control_loop
+    await self._apply_brightness_async(next_brightness)
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 222, in _apply_brightness_async
+    device = await self._ensure_device()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 217, in _ensure_device
+    self._device = await self._connect_device()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 211, in _connect_device
+    raise RuntimeError(
+RuntimeError: Unable to connect to Tapo bulb after 3 attempts across 1 IP(s): Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+
+2026-04-23 10:33:15,950 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connect attempt 1/3 to ip=172.20.10.2 diagnostics={"hostname": "Jadens-MacBook-Air-73.local", "localRouteIp": "172.20.10.3", "resolvedTarget": "172.20.10.2", "targetIp": "172.20.10.2", "tcp443Reachable": false, "tcp80Reachable": false}
+2026-04-23 10:33:15,952 | ERROR | Thread-1 (_loop_thread) | tapo_bridge | Connection exception ip=172.20.10.2 type=Exception message=Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+2026-04-23 10:33:15,952 | DEBUG | Thread-1 (_loop_thread) | tapo_bridge | Traceback for connection failure:
+Traceback (most recent call last):
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 173, in _connect_device
+    device = await asyncio.wait_for(client.l530(ip), timeout=timeout_s)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jadenbehringer/.pyenv/versions/3.12.12/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+Exception: Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+
+2026-04-23 10:33:15,952 | WARNING | Thread-1 (_loop_thread) | tapo_bridge | connect attempt 1 failed: Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) }). Check hardcoded bulb IP, same Wi-Fi/subnet, and TP-Link credentials.
+2026-04-23 10:33:16,955 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connect attempt 2/3 to ip=172.20.10.2 diagnostics={"hostname": "Jadens-MacBook-Air-73.local", "localRouteIp": "172.20.10.3", "resolvedTarget": "172.20.10.2", "targetIp": "172.20.10.2", "tcp443Reachable": false, "tcp80Reachable": false}
+2026-04-23 10:33:16,956 | ERROR | Thread-1 (_loop_thread) | tapo_bridge | Connection exception ip=172.20.10.2 type=Exception message=Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+2026-04-23 10:33:16,956 | DEBUG | Thread-1 (_loop_thread) | tapo_bridge | Traceback for connection failure:
+Traceback (most recent call last):
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 173, in _connect_device
+    device = await asyncio.wait_for(client.l530(ip), timeout=timeout_s)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jadenbehringer/.pyenv/versions/3.12.12/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+Exception: Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+
+2026-04-23 10:33:16,956 | WARNING | Thread-1 (_loop_thread) | tapo_bridge | connect attempt 2 failed: Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) }). Check hardcoded bulb IP, same Wi-Fi/subnet, and TP-Link credentials.
+2026-04-23 10:33:17,959 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connect attempt 3/3 to ip=172.20.10.2 diagnostics={"hostname": "Jadens-MacBook-Air-73.local", "localRouteIp": "172.20.10.3", "resolvedTarget": "172.20.10.2", "targetIp": "172.20.10.2", "tcp443Reachable": false, "tcp80Reachable": false}
+2026-04-23 10:33:17,960 | ERROR | Thread-1 (_loop_thread) | tapo_bridge | Connection exception ip=172.20.10.2 type=Exception message=Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+2026-04-23 10:33:17,960 | DEBUG | Thread-1 (_loop_thread) | tapo_bridge | Traceback for connection failure:
+Traceback (most recent call last):
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 173, in _connect_device
+    device = await asyncio.wait_for(client.l530(ip), timeout=timeout_s)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jadenbehringer/.pyenv/versions/3.12.12/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+Exception: Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+
+2026-04-23 10:33:17,960 | WARNING | Thread-1 (_loop_thread) | tapo_bridge | connect attempt 3 failed: Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) }). Check hardcoded bulb IP, same Wi-Fi/subnet, and TP-Link credentials.
+2026-04-23 10:33:17,961 | ERROR | Thread-1 (_loop_thread) | tapo_bridge | All connection attempts failed retries=3 targets=['172.20.10.2'] last_error=Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+2026-04-23 10:33:17,961 | ERROR | Thread-1 (_loop_thread) | tapo_bridge | control loop brightness apply failed next=3 error=Unable to connect to Tapo bulb after 3 attempts across 1 IP(s): Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+2026-04-23 10:33:17,961 | DEBUG | Thread-1 (_loop_thread) | tapo_bridge | Traceback for control loop failure:
+Traceback (most recent call last):
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 349, in _control_loop
+    await self._apply_brightness_async(next_brightness)
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 222, in _apply_brightness_async
+    device = await self._ensure_device()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 217, in _ensure_device
+    self._device = await self._connect_device()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 211, in _connect_device
+    raise RuntimeError(
+RuntimeError: Unable to connect to Tapo bulb after 3 attempts across 1 IP(s): Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+
+2026-04-23 10:33:18,004 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connect attempt 1/3 to ip=172.20.10.2 diagnostics={"hostname": "Jadens-MacBook-Air-73.local", "localRouteIp": "172.20.10.3", "resolvedTarget": "172.20.10.2", "targetIp": "172.20.10.2", "tcp443Reachable": false, "tcp80Reachable": false}
+2026-04-23 10:33:18,005 | ERROR | Thread-1 (_loop_thread) | tapo_bridge | Connection exception ip=172.20.10.2 type=Exception message=Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+2026-04-23 10:33:18,005 | DEBUG | Thread-1 (_loop_thread) | tapo_bridge | Traceback for connection failure:
+Traceback (most recent call last):
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 173, in _connect_device
+    device = await asyncio.wait_for(client.l530(ip), timeout=timeout_s)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jadenbehringer/.pyenv/versions/3.12.12/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+Exception: Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+
+2026-04-23 10:33:18,005 | WARNING | Thread-1 (_loop_thread) | tapo_bridge | connect attempt 1 failed: Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) }). Check hardcoded bulb IP, same Wi-Fi/subnet, and TP-Link credentials.
+2026-04-23 10:33:19,007 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connect attempt 2/3 to ip=172.20.10.2 diagnostics={"hostname": "Jadens-MacBook-Air-73.local", "localRouteIp": "172.20.10.3", "resolvedTarget": "172.20.10.2", "targetIp": "172.20.10.2", "tcp443Reachable": false, "tcp80Reachable": false}
+2026-04-23 10:33:19,008 | ERROR | Thread-1 (_loop_thread) | tapo_bridge | Connection exception ip=172.20.10.2 type=Exception message=Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+2026-04-23 10:33:19,008 | DEBUG | Thread-1 (_loop_thread) | tapo_bridge | Traceback for connection failure:
+Traceback (most recent call last):
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 173, in _connect_device
+    device = await asyncio.wait_for(client.l530(ip), timeout=timeout_s)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jadenbehringer/.pyenv/versions/3.12.12/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+Exception: Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+
+2026-04-23 10:33:19,008 | WARNING | Thread-1 (_loop_thread) | tapo_bridge | connect attempt 2 failed: Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) }). Check hardcoded bulb IP, same Wi-Fi/subnet, and TP-Link credentials.
+2026-04-23 10:33:20,010 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connect attempt 3/3 to ip=172.20.10.2 diagnostics={"hostname": "Jadens-MacBook-Air-73.local", "localRouteIp": "172.20.10.3", "resolvedTarget": "172.20.10.2", "targetIp": "172.20.10.2", "tcp443Reachable": false, "tcp80Reachable": false}
+2026-04-23 10:33:20,010 | ERROR | Thread-1 (_loop_thread) | tapo_bridge | Connection exception ip=172.20.10.2 type=Exception message=Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+2026-04-23 10:33:20,011 | DEBUG | Thread-1 (_loop_thread) | tapo_bridge | Traceback for connection failure:
+Traceback (most recent call last):
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 173, in _connect_device
+    device = await asyncio.wait_for(client.l530(ip), timeout=timeout_s)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jadenbehringer/.pyenv/versions/3.12.12/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+Exception: Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+
+2026-04-23 10:33:20,011 | WARNING | Thread-1 (_loop_thread) | tapo_bridge | connect attempt 3 failed: Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) }). Check hardcoded bulb IP, same Wi-Fi/subnet, and TP-Link credentials.
+2026-04-23 10:33:20,011 | ERROR | Thread-1 (_loop_thread) | tapo_bridge | All connection attempts failed retries=3 targets=['172.20.10.2'] last_error=Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+2026-04-23 10:33:20,011 | ERROR | Thread-1 (_loop_thread) | tapo_bridge | control loop brightness apply failed next=3 error=Unable to connect to Tapo bulb after 3 attempts across 1 IP(s): Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+2026-04-23 10:33:20,011 | DEBUG | Thread-1 (_loop_thread) | tapo_bridge | Traceback for control loop failure:
+Traceback (most recent call last):
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 349, in _control_loop
+    await self._apply_brightness_async(next_brightness)
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 222, in _apply_brightness_async
+    device = await self._ensure_device()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 217, in _ensure_device
+    self._device = await self._connect_device()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 211, in _connect_device
+    raise RuntimeError(
+RuntimeError: Unable to connect to Tapo bulb after 3 attempts across 1 IP(s): Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+
+2026-04-23 10:33:20,053 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connect attempt 1/3 to ip=172.20.10.2 diagnostics={"hostname": "Jadens-MacBook-Air-73.local", "localRouteIp": "172.20.10.3", "resolvedTarget": "172.20.10.2", "targetIp": "172.20.10.2", "tcp443Reachable": false, "tcp80Reachable": false}
+2026-04-23 10:33:20,054 | ERROR | Thread-1 (_loop_thread) | tapo_bridge | Connection exception ip=172.20.10.2 type=Exception message=Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+2026-04-23 10:33:20,054 | DEBUG | Thread-1 (_loop_thread) | tapo_bridge | Traceback for connection failure:
+Traceback (most recent call last):
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 173, in _connect_device
+    device = await asyncio.wait_for(client.l530(ip), timeout=timeout_s)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jadenbehringer/.pyenv/versions/3.12.12/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+Exception: Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+
+2026-04-23 10:33:20,054 | WARNING | Thread-1 (_loop_thread) | tapo_bridge | connect attempt 1 failed: Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) }). Check hardcoded bulb IP, same Wi-Fi/subnet, and TP-Link credentials.
+2026-04-23 10:33:21,056 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connect attempt 2/3 to ip=172.20.10.2 diagnostics={"hostname": "Jadens-MacBook-Air-73.local", "localRouteIp": "172.20.10.3", "resolvedTarget": "172.20.10.2", "targetIp": "172.20.10.2", "tcp443Reachable": false, "tcp80Reachable": false}
+2026-04-23 10:33:21,057 | ERROR | Thread-1 (_loop_thread) | tapo_bridge | Connection exception ip=172.20.10.2 type=Exception message=Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+2026-04-23 10:33:21,058 | DEBUG | Thread-1 (_loop_thread) | tapo_bridge | Traceback for connection failure:
+Traceback (most recent call last):
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 173, in _connect_device
+    device = await asyncio.wait_for(client.l530(ip), timeout=timeout_s)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jadenbehringer/.pyenv/versions/3.12.12/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+Exception: Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+
+2026-04-23 10:33:21,058 | WARNING | Thread-1 (_loop_thread) | tapo_bridge | connect attempt 2 failed: Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) }). Check hardcoded bulb IP, same Wi-Fi/subnet, and TP-Link credentials.
+2026-04-23 10:33:22,060 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connect attempt 3/3 to ip=172.20.10.2 diagnostics={"hostname": "Jadens-MacBook-Air-73.local", "localRouteIp": "172.20.10.3", "resolvedTarget": "172.20.10.2", "targetIp": "172.20.10.2", "tcp443Reachable": false, "tcp80Reachable": false}
+2026-04-23 10:33:22,061 | ERROR | Thread-1 (_loop_thread) | tapo_bridge | Connection exception ip=172.20.10.2 type=Exception message=Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+2026-04-23 10:33:22,062 | DEBUG | Thread-1 (_loop_thread) | tapo_bridge | Traceback for connection failure:
+Traceback (most recent call last):
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 173, in _connect_device
+    device = await asyncio.wait_for(client.l530(ip), timeout=timeout_s)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jadenbehringer/.pyenv/versions/3.12.12/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+Exception: Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+
+2026-04-23 10:33:22,062 | WARNING | Thread-1 (_loop_thread) | tapo_bridge | connect attempt 3 failed: Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) }). Check hardcoded bulb IP, same Wi-Fi/subnet, and TP-Link credentials.
+2026-04-23 10:33:22,062 | ERROR | Thread-1 (_loop_thread) | tapo_bridge | All connection attempts failed retries=3 targets=['172.20.10.2'] last_error=Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+2026-04-23 10:33:22,062 | ERROR | Thread-1 (_loop_thread) | tapo_bridge | control loop brightness apply failed next=3 error=Unable to connect to Tapo bulb after 3 attempts across 1 IP(s): Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+2026-04-23 10:33:22,063 | DEBUG | Thread-1 (_loop_thread) | tapo_bridge | Traceback for control loop failure:
+Traceback (most recent call last):
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 349, in _control_loop
+    await self._apply_brightness_async(next_brightness)
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 222, in _apply_brightness_async
+    device = await self._ensure_device()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 217, in _ensure_device
+    self._device = await self._connect_device()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 211, in _connect_device
+    raise RuntimeError(
+RuntimeError: Unable to connect to Tapo bulb after 3 attempts across 1 IP(s): Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+
+2026-04-23 10:33:22,105 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connect attempt 1/3 to ip=172.20.10.2 diagnostics={"hostname": "Jadens-MacBook-Air-73.local", "localRouteIp": "172.20.10.3", "resolvedTarget": "172.20.10.2", "targetIp": "172.20.10.2", "tcp443Reachable": false, "tcp80Reachable": false}
+2026-04-23 10:33:22,106 | ERROR | Thread-1 (_loop_thread) | tapo_bridge | Connection exception ip=172.20.10.2 type=Exception message=Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+2026-04-23 10:33:22,106 | DEBUG | Thread-1 (_loop_thread) | tapo_bridge | Traceback for connection failure:
+Traceback (most recent call last):
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 173, in _connect_device
+    device = await asyncio.wait_for(client.l530(ip), timeout=timeout_s)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jadenbehringer/.pyenv/versions/3.12.12/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+Exception: Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+
+2026-04-23 10:33:22,107 | WARNING | Thread-1 (_loop_thread) | tapo_bridge | connect attempt 1 failed: Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) }). Check hardcoded bulb IP, same Wi-Fi/subnet, and TP-Link credentials.
+2026-04-23 10:33:23,109 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connect attempt 2/3 to ip=172.20.10.2 diagnostics={"hostname": "Jadens-MacBook-Air-73.local", "localRouteIp": "172.20.10.3", "resolvedTarget": "172.20.10.2", "targetIp": "172.20.10.2", "tcp443Reachable": false, "tcp80Reachable": false}
+2026-04-23 10:33:23,110 | ERROR | Thread-1 (_loop_thread) | tapo_bridge | Connection exception ip=172.20.10.2 type=Exception message=Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+2026-04-23 10:33:23,110 | DEBUG | Thread-1 (_loop_thread) | tapo_bridge | Traceback for connection failure:
+Traceback (most recent call last):
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 173, in _connect_device
+    device = await asyncio.wait_for(client.l530(ip), timeout=timeout_s)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jadenbehringer/.pyenv/versions/3.12.12/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+Exception: Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+
+2026-04-23 10:33:23,111 | WARNING | Thread-1 (_loop_thread) | tapo_bridge | connect attempt 2 failed: Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) }). Check hardcoded bulb IP, same Wi-Fi/subnet, and TP-Link credentials.
+2026-04-23 10:33:24,113 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connect attempt 3/3 to ip=172.20.10.2 diagnostics={"hostname": "Jadens-MacBook-Air-73.local", "localRouteIp": "172.20.10.3", "resolvedTarget": "172.20.10.2", "targetIp": "172.20.10.2", "tcp443Reachable": false, "tcp80Reachable": false}
+2026-04-23 10:33:24,115 | ERROR | Thread-1 (_loop_thread) | tapo_bridge | Connection exception ip=172.20.10.2 type=Exception message=Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+2026-04-23 10:33:24,116 | DEBUG | Thread-1 (_loop_thread) | tapo_bridge | Traceback for connection failure:
+Traceback (most recent call last):
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 173, in _connect_device
+    device = await asyncio.wait_for(client.l530(ip), timeout=timeout_s)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jadenbehringer/.pyenv/versions/3.12.12/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+Exception: Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+
+2026-04-23 10:33:24,116 | WARNING | Thread-1 (_loop_thread) | tapo_bridge | connect attempt 3 failed: Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) }). Check hardcoded bulb IP, same Wi-Fi/subnet, and TP-Link credentials.
+2026-04-23 10:33:24,116 | ERROR | Thread-1 (_loop_thread) | tapo_bridge | All connection attempts failed retries=3 targets=['172.20.10.2'] last_error=Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+2026-04-23 10:33:24,116 | ERROR | Thread-1 (_loop_thread) | tapo_bridge | control loop brightness apply failed next=3 error=Unable to connect to Tapo bulb after 3 attempts across 1 IP(s): Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+2026-04-23 10:33:24,117 | DEBUG | Thread-1 (_loop_thread) | tapo_bridge | Traceback for control loop failure:
+Traceback (most recent call last):
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 349, in _control_loop
+    await self._apply_brightness_async(next_brightness)
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 222, in _apply_brightness_async
+    device = await self._ensure_device()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 217, in _ensure_device
+    self._device = await self._connect_device()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 211, in _connect_device
+    raise RuntimeError(
+RuntimeError: Unable to connect to Tapo bulb after 3 attempts across 1 IP(s): Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+
+2026-04-23 10:33:24,160 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connect attempt 1/3 to ip=172.20.10.2 diagnostics={"hostname": "Jadens-MacBook-Air-73.local", "localRouteIp": "172.20.10.3", "resolvedTarget": "172.20.10.2", "targetIp": "172.20.10.2", "tcp443Reachable": false, "tcp80Reachable": false}
+2026-04-23 10:33:24,161 | ERROR | Thread-1 (_loop_thread) | tapo_bridge | Connection exception ip=172.20.10.2 type=Exception message=Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+2026-04-23 10:33:24,162 | DEBUG | Thread-1 (_loop_thread) | tapo_bridge | Traceback for connection failure:
+Traceback (most recent call last):
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 173, in _connect_device
+    device = await asyncio.wait_for(client.l530(ip), timeout=timeout_s)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jadenbehringer/.pyenv/versions/3.12.12/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+Exception: Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+
+2026-04-23 10:33:24,162 | WARNING | Thread-1 (_loop_thread) | tapo_bridge | connect attempt 1 failed: Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) }). Check hardcoded bulb IP, same Wi-Fi/subnet, and TP-Link credentials.
+2026-04-23 10:33:25,164 | INFO | Thread-1 (_loop_thread) | tapo_bridge | Connect attempt 2/3 to ip=172.20.10.2 diagnostics={"hostname": "Jadens-MacBook-Air-73.local", "localRouteIp": "172.20.10.3", "resolvedTarget": "172.20.10.2", "targetIp": "172.20.10.2", "tcp443Reachable": false, "tcp80Reachable": false}
+2026-04-23 10:33:25,165 | ERROR | Thread-1 (_loop_thread) | tapo_bridge | Connection exception ip=172.20.10.2 type=Exception message=Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+2026-04-23 10:33:25,166 | DEBUG | Thread-1 (_loop_thread) | tapo_bridge | Traceback for connection failure:
+Traceback (most recent call last):
+  File "/Users/jadenbehringer/Documents/projects/AERO_636_proj/Tapo_cycle_dashboard.py", line 173, in _connect_device
+    device = await asyncio.wait_for(client.l530(ip), timeout=timeout_s)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jadenbehringer/.pyenv/versions/3.12.12/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+Exception: Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) })
+
+2026-04-23 10:33:25,166 | WARNING | Thread-1 (_loop_thread) | tapo_bridge | connect attempt 2 failed: Http(reqwest::Error { kind: Request, url: "http://172.20.10.2/app", source: hyper_util::client::legacy::Error(Connect, ConnectError("tcp connect error", 172.20.10.2:80, Os { code: 64, kind: Uncategorized, message: "Host is down" })) }). Check hardcoded bulb IP, same Wi-Fi/subnet, and TP-Link credentials.
+2026-04-23 10:33:26,502 | INFO | MainThread | tapo_bridge | KeyboardInterrupt received; shutting down server
+2026-04-23 10:33:26,503 | INFO | MainThread | tapo_bridge | Server closed

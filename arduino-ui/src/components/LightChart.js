@@ -10,7 +10,7 @@ const CustomTooltip = ({ active, payload }) => {
         borderRadius: 6,
         padding: '6px 10px',
         fontFamily: 'Space Mono, monospace',
-        fontSize: 11,
+        fontSize: 15,
         color: '#00c8ff',
       }}>
         {Math.round(payload[0].value)}
@@ -25,7 +25,7 @@ export default function LightChart({ history }) {
 
   return (
     <div className={styles.section}>
-      <div className={styles.label}>Light level history — 60s window</div>
+      <div className={styles.label}>Lux history — 60s window</div>
       <div className={styles.chartWrap}>
         <ResponsiveContainer width="100%" height={120}>
           <AreaChart data={chartData} margin={{ top: 4, right: 4, left: -20, bottom: 0 }}>
@@ -38,7 +38,7 @@ export default function LightChart({ history }) {
             <XAxis dataKey="i" hide />
             <YAxis
               domain={[0, 1023]}
-              tick={{ fill: 'rgba(200,216,240,0.3)', fontSize: 9, fontFamily: 'Space Mono' }}
+              tick={{ fill: 'rgba(200,216,240, 0.95)', fontSize: 12, fontFamily: 'Space Mono' }}
               tickLine={false}
               axisLine={false}
             />

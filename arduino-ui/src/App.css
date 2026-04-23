@@ -1,11 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
   background: #060b18;
-  color: #c8d8f0;
-  font-family: 'DM Sans', sans-serif;
+  color: #ffffff; /* Brighter default text */
+  font-family: 'Space Mono', monospace;
   overflow-x: hidden;
 }
 
@@ -16,12 +16,21 @@ body {
   --purple: #a080ff;
   --red: #ff4444;
   --orange: #ff6b35;
+  /* Keep background and border opacities low */
   --surface: rgba(0, 30, 70, 0.4);
   --border: rgba(0, 180, 255, 0.12);
   --border-bright: rgba(0, 200, 255, 0.4);
-  --text-dim: rgba(200, 216, 240, 0.35);
-  --text-mid: rgba(200, 216, 240, 0.55);
+  /* Make text way brighter */
+  --text-dim: rgba(255, 255, 255, 0.85); /* Much brighter dim text */
+  --text-mid: rgba(255, 255, 255, 0.95); /* Much brighter mid text */
   --mono: 'Space Mono', monospace;
 }
 
 .mono { font-family: var(--mono); }
+
+/* Force exact text style parameters globally without disturbing layout opacities */
+* {
+  font-family: 'Space Mono', monospace !important;
+  font-weight: 700 !important; /* 6:1 stroke */
+  letter-spacing: 0.2em !important; /* 1:1 character width emulation */
+}

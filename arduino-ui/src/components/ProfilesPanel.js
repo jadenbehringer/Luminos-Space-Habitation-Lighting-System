@@ -15,16 +15,18 @@ export default function ProfilesPanel({ activeProfile, onProfileClick }) {
             className={`${styles.card} ${activeProfile === p.id ? styles.active : ''}`}
             onClick={() => onProfileClick && onProfileClick(p)}
           >
-            {activeProfile === p.id && <div className={styles.activeBadge}>ACTIVE</div>}
-            <div className={styles.icon}>{p.icon}</div>
-            <div className={styles.name}>{p.name}</div>
-            <div className={styles.metricRow}>
-              <span className={styles.metricLabel}>Lux</span>
-              <span className={styles.metricValue}>{p.targetLux}</span>
+            {activeProfile === p.id && <div className={styles.activeDot} />}
+            <div className={styles.header}>
+              <div className={styles.icon}>{p.icon}</div>
+              <div className={styles.name}>{p.name}</div>
             </div>
             <div className={styles.metricRow}>
-              <span className={styles.metricLabel}>Blue light</span>
-              <span className={styles.metricValue}>{p.blueLightLevel}</span>
+              <span className={styles.metricLabel}>Lux</span>
+              <span className={`${styles.metricValue} ${styles.luxValue}`}>{p.targetLux}</span>
+            </div>
+            <div className={styles.metricRow}>
+              <span className={`${styles.metricLabel} ${styles.blueValue}`}>Blue</span>
+              <span className={`${styles.metricValue} ${styles.blueValue}`}>{p.blueLightLevel}</span>
             </div>
           </div>
         ))}

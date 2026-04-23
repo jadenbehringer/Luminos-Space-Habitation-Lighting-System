@@ -6,9 +6,9 @@
 
 .label {
   font-family: 'Space Mono', monospace;
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 2px;
-  color: rgba(0, 200, 255, 0.5);
+  color: #ffffff;
   text-transform: uppercase;
   margin-bottom: 12px;
 }

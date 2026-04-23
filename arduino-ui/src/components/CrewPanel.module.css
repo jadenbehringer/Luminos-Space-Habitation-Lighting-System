@@ -7,9 +7,9 @@
 
 .label {
   font-family: 'Space Mono', monospace;
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 2px;
-  color: rgba(0, 200, 255, 0.7);
+  color: rgba(0, 200, 255, 0.95);
   text-transform: uppercase;
   margin-bottom: 16px;
 }
@@ -25,7 +25,7 @@
 }
 
 .card.active {
-  border-color: rgba(0, 200, 255, 0.4);
+  border-color: rgba(0, 200, 255, 0.95);
   background: rgba(0, 40, 100, 0.4);
 }
 
@@ -40,7 +40,7 @@
 
 .callsign {
   font-family: 'Space Mono', monospace;
-  font-size: 12px;
+  font-size: 16px;
   letter-spacing: 0.9px;
   color: #e0eeff;
   font-weight: 700;
@@ -49,7 +49,7 @@
 
 .activity {
   font-family: 'Space Mono', monospace;
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 1px;
   padding: 3px 8px;
   border-radius: 4px;
@@ -58,8 +58,8 @@
 }
 
 .meta {
-  font-size: 10px;
-  color: rgba(200, 216, 240, 0.55);
+  font-size: 14px;
+  color: rgba(200, 216, 240, 0.95);
   margin-top: 2px;
 }
 
@@ -84,8 +84,8 @@
 
 .orbitInfo {
   font-family: 'Space Mono', monospace;
-  font-size: 9px;
-  color: rgba(200, 216, 240, 0.58);
+  font-size: 12px;
+  color: rgba(200, 216, 240, 0.95);
   letter-spacing: 1px;
   line-height: 2.2;
 }

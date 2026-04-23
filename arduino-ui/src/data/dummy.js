@@ -17,7 +17,7 @@ export const CREW = [
     designation: 'FE-1',
     activity: 'SLEEP',
     activityClass: 'sleep',
-    targetLux: 10,
+    targetLux: 0,
     overrides: 1,
     active: false,
     color: '#a080ff',
@@ -54,9 +54,9 @@ export const PROFILES = [
     id: 'sleep',
     icon: '☾',
     name: 'SLEEP',
-    targetRange: '0–20 lux',
-    targetLux: 10,
-    blueLightLevel: 5,
+    targetRange: '0 lux',
+    targetLux: 0,
+    blueLightLevel: 210,
     servoPositions: [10, 15, 10, 5],
   },
   {
@@ -65,7 +65,7 @@ export const PROFILES = [
     name: 'DAWN',
     targetRange: '40–100 lux',
     targetLux: 70,
-    blueLightLevel: 22,
+    blueLightLevel: 840,
     servoPositions: [30, 35, 30, 28],
   },
   {
@@ -74,7 +74,7 @@ export const PROFILES = [
     name: 'DUSK',
     targetRange: '80–140 lux',
     targetLux: 110,
-    blueLightLevel: 18,
+    blueLightLevel: 620,
     servoPositions: [55, 50, 52, 48],
   },
   {
@@ -83,7 +83,7 @@ export const PROFILES = [
     name: 'LEISURE',
     targetRange: '250–350 lux',
     targetLux: 300,
-    blueLightLevel: 28,
+    blueLightLevel: 1050,
     servoPositions: [85, 90, 88, 82],
   },
   {
@@ -92,7 +92,7 @@ export const PROFILES = [
     name: 'HYGEINE',
     targetRange: '400–500 lux',
     targetLux: 450,
-    blueLightLevel: 34,
+    blueLightLevel: 1280,
     servoPositions: [98, 108, 102, 96],
   },
   {
@@ -101,7 +101,7 @@ export const PROFILES = [
     name: 'MEAL',
     targetRange: '550–650 lux',
     targetLux: 600,
-    blueLightLevel: 36,
+    blueLightLevel: 1420,
     servoPositions: [95, 105, 100, 92],
   },
   {
@@ -110,7 +110,7 @@ export const PROFILES = [
     name: 'EXERCISE',
     targetRange: '750–850 lux',
     targetLux: 800,
-    blueLightLevel: 52,
+    blueLightLevel: 2450,
     servoPositions: [120, 130, 128, 115],
   },
   {
@@ -119,7 +119,7 @@ export const PROFILES = [
     name: 'MAITENANCE',
     targetRange: '950–1050 lux',
     targetLux: 1000,
-    blueLightLevel: 58,
+    blueLightLevel: 2820,
     servoPositions: [125, 120, 130, 118],
   },
   {
@@ -128,7 +128,7 @@ export const PROFILES = [
     name: 'EVA PREP',
     targetRange: '1200–1300 lux',
     targetLux: 1250,
-    blueLightLevel: 64,
+    blueLightLevel: 3150,
     servoPositions: [135, 145, 140, 132],
   },
   {
@@ -137,7 +137,7 @@ export const PROFILES = [
     name: 'RESEARCH',
     targetRange: '1500+ lux',
     targetLux: 1550,
-    blueLightLevel: 70,
+    blueLightLevel: 3400,
     servoPositions: [145, 150, 155, 142],
   },
 ];

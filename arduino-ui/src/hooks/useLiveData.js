@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { PROFILES } from '../data/dummy';
 
 export function useLiveData() {
   const startRef = useRef(Date.now());
@@ -200,17 +201,15 @@ export function useLiveData() {
       const w2 = parseFloat((1.0 + Math.cos(t / 35) * 0.4).toFixed(2));
       const w3 = parseFloat((0.8 + Math.sin(t / 50) * 0.3).toFixed(2));
 
-      let activeProfile = 'sleep';
-      if (lux < 30) activeProfile = 'sleep';
-      else if (lux < 80) activeProfile = 'dawn';
-      else if (lux < 600) activeProfile = 'dusk';
-      else if (lux < 650) activeProfile = 'leisure';
-      else if (lux < 710) activeProfile = 'hygeine';
-      else if (lux < 750) activeProfile = 'meal';
-      else if (lux < 820) activeProfile = 'exercise';
-      else if (lux < 900) activeProfile = 'maitenance';
-      else if (lux < 980) activeProfile = 'eva-prep';
-      else activeProfile = 'research';
+      let activeProfile = PROFILES[0].id;
+      let minDist = Infinity;
+      for (const p of PROFILES) {
+        const dist = Math.abs(lux - p.targetLux);
+        if (dist < minDist) {
+          minDist = dist;
+          activeProfile = p.id;
+        }
+      }
 
       // Three-level alert per NASA SSP_50005 ISS Human Integration Standard §9.4.4.3
       // Emergency (class 1) = solar flare; Caution (class 3) = lux out of tolerance

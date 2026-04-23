@@ -23,7 +23,7 @@ export default function Dashboard() {
         bulbOnline={bridgeData.bridge.online}
       />
       <div className={styles.grid}>
-        <CrewPanel />
+        <CrewPanel activeProfile={data.activeProfile} />
         <div className={styles.center}>
           <TapoControlPanel lux={data.lux} bridgeData={bridgeData} writeSerial={data.writeSerial} />
           <LightChart history={data.history} />

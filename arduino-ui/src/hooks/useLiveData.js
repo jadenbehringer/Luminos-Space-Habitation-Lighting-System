@@ -3,6 +3,10 @@ import { useState, useEffect, useRef } from 'react';
 export function useLiveData() {
   const startRef = useRef(Date.now());
   const histRef = useRef(Array.from({ length: 60 }, () => 300 + Math.random() * 100));
+  const sensorRef = useRef({ raw: null, voltage: null, lux: null, hasData: false });
+  const readerRef = useRef(null);
+  const portRef = useRef(null);
+  const connectSerialRef = useRef(async () => {});
 
   const [data, setData] = useState({
     raw: 647,
@@ -21,24 +25,146 @@ export function useLiveData() {
     solarAlert: false,
     alertLevel: null,
     activeProfile: 'circadian',
+    serialSupported: typeof navigator !== 'undefined' && 'serial' in navigator,
+    serialConnected: false,
+    serialError: null,
   });
+
+  useEffect(() => {
+    if (typeof navigator === 'undefined' || !('serial' in navigator)) return undefined;
+
+    let cancelled = false;
+
+    const connectToPort = async (port) => {
+      if (readerRef.current) {
+        try {
+          await readerRef.current.cancel();
+          readerRef.current.releaseLock();
+        } catch (_) {}
+      }
+      if (portRef.current && portRef.current !== port) {
+        try {
+          await portRef.current.close();
+        } catch (_) {}
+      }
+
+      await port.open({ baudRate: 9600 });
+      portRef.current = port;
+
+      let reader;
+      if (port.readable.pipeThrough && typeof TextDecoderStream !== 'undefined') {
+        const textDecoder = new TextDecoderStream();
+        port.readable.pipeTo(textDecoder.writable).catch(() => {});
+        reader = textDecoder.readable.getReader();
+      } else {
+        reader = port.readable.getReader();
+      }
+      readerRef.current = reader;
+
+      setData((prev) => ({ ...prev, serialConnected: true, serialError: null }));
+
+      let buffer = '';
+      try {
+        while (!cancelled) {
+          const { value, done } = await reader.read();
+          if (done) break;
+
+          const chunk = typeof value === 'string' ? value : new TextDecoder().decode(value);
+          buffer += chunk;
+
+          const lines = buffer.split(/\r?\n/);
+          buffer = lines.pop() || '';
+
+          for (const line of lines) {
+            const m = line.match(/RAW:\s*(\d+)\s*,\s*VOLTAGE:\s*([\d.]+)\s*,\s*LUX:\s*([\d.]+)/i);
+            if (!m) continue;
+
+            sensorRef.current = {
+              raw: Number(m[1]),
+              voltage: Number(m[2]),
+              lux: Number(m[3]),
+              hasData: true,
+            };
+          }
+        }
+      } catch (_) {
+        // Ignore transient serial read errors during disconnect/reconnect.
+      } finally {
+        setData((prev) => ({ ...prev, serialConnected: false }));
+        try {
+          reader.releaseLock();
+        } catch (_) {}
+      }
+    };
+
+    const autoReconnect = async () => {
+      try {
+        const ports = await navigator.serial.getPorts();
+        if (!ports.length || cancelled) return;
+        await connectToPort(ports[0]);
+      } catch (err) {
+        if (cancelled) return;
+        setData((prev) => ({ ...prev, serialError: err?.message || 'Serial connection failed' }));
+      }
+    };
+
+    connectSerialRef.current = async () => {
+      try {
+        const port = await navigator.serial.requestPort();
+        if (cancelled) return;
+        await connectToPort(port);
+      } catch (err) {
+        if (cancelled) return;
+        setData((prev) => ({
+          ...prev,
+          serialConnected: false,
+          serialError: err?.message || 'Serial connection failed',
+        }));
+      }
+    };
+
+    autoReconnect();
+
+    return () => {
+      cancelled = true;
+      setData((prev) => ({ ...prev, serialConnected: false }));
+
+      const cleanup = async () => {
+        try {
+          if (readerRef.current) {
+            await readerRef.current.cancel();
+            readerRef.current.releaseLock();
+          }
+        } catch (_) {}
+        try {
+          if (portRef.current) await portRef.current.close();
+        } catch (_) {}
+      };
+
+      cleanup();
+    };
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
       const t = (Date.now() - startRef.current) / 1000;
 
-      const raw = Math.round(Math.min(1023, Math.max(0,
+      const simulatedRaw = Math.round(Math.min(1023, Math.max(0,
         600 + Math.sin(t / 15) * 150 + Math.sin(t / 5) * 30 + Math.random() * 15
       )));
+      const hasSerialLux = sensorRef.current.hasData;
+      const raw = hasSerialLux ? sensorRef.current.raw : simulatedRaw;
       const circadian = Math.round(200 + Math.sin(t / 30) * 120);
-      const fused = Math.round(raw * 0.7 + circadian * 0.3);
-      const lux = Math.round(fused * 0.48);
+      const fused = hasSerialLux ? raw : Math.round(raw * 0.7 + circadian * 0.3);
+      const lux = hasSerialLux
+        ? sensorRef.current.lux
+        : Math.round(fused * 0.48);
 
-      const prevFused = histRef.current[histRef.current.length - 1];
-      const delta = fused - prevFused;
+      const prevValue = histRef.current[histRef.current.length - 1];
+      const delta = Math.round(lux - prevValue);
       const solarAlert = delta > 80;
 
-      histRef.current = [...histRef.current.slice(1), fused];
+      histRef.current = [...histRef.current.slice(1), lux];
 
       const orbitMs = (t * 1000) % 540000;
       const orbitPct = Math.round((orbitMs / 540000) * 100);
@@ -66,7 +192,8 @@ export function useLiveData() {
       // Emergency (class 1) = solar flare; Caution (class 3) = lux out of tolerance
       const alertLevel = solarAlert ? 'emergency' : (lux > 450 || lux < 50) ? 'caution' : null;
 
-      setData({
+      setData((prev) => ({
+        ...prev,
         raw,
         circadian,
         fused,
@@ -83,11 +210,14 @@ export function useLiveData() {
         solarAlert,
         alertLevel,
         activeProfile,
-      });
+      }));
     }, 150);
 
     return () => clearInterval(interval);
   }, []);
 
-  return data;
+  return {
+    ...data,
+    connectSerial: () => connectSerialRef.current(),
+  };
 }

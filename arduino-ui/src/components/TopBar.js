@@ -6,7 +6,14 @@ const STATUS = {
   null:      { label: 'NOMINAL',   cls: 'nominal' },
 };
 
-export default function TopBar({ missionTime, alertLevel }) {
+export default function TopBar({
+  missionTime,
+  alertLevel,
+  serialSupported,
+  serialConnected,
+  serialError,
+  onConnectSerial,
+}) {
   const key = alertLevel ?? 'null';
   const { label, cls } = STATUS[key];
 
@@ -14,11 +21,24 @@ export default function TopBar({ missionTime, alertLevel }) {
     <div className={styles.bar}>
       <div className={styles.logo}>LUMINOS // ADAPTIVE WINDOW SYSTEM</div>
       <div className={styles.right}>
+        <span className={styles.serialState}>
+          {typeof serialSupported === 'boolean' && !serialSupported
+            ? 'SERIAL UNSUPPORTED'
+            : serialConnected
+              ? 'ARDUINO LUX LIVE'
+              : 'SIM MODE'}
+        </span>
+        {serialSupported && !serialConnected && (
+          <button className={styles.serialBtn} onClick={onConnectSerial} type="button">
+            Connect Arduino
+          </button>
+        )}
         <span className={`${styles.pill} ${styles[cls]}`}>
           {label}
         </span>
         <span className={styles.time}>MET {missionTime}</span>
       </div>
+      {serialError && <div className={styles.serialError}>Serial error: {serialError}</div>}
     </div>
   );
 }

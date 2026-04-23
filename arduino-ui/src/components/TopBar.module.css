@@ -24,6 +24,35 @@
   gap: 16px;
 }
 
+.serialState {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  color: rgba(0, 200, 255, 0.75);
+}
+
+.serialBtn {
+  border: 0.5px solid rgba(0, 200, 255, 0.45);
+  background: rgba(0, 200, 255, 0.08);
+  color: #00c8ff;
+  border-radius: 16px;
+  padding: 4px 10px;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+.serialBtn:hover {
+  background: rgba(0, 200, 255, 0.18);
+}
+
+.serialError {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  color: #ff7a7a;
+}
+
 .pill {
   font-family: 'Space Mono', monospace;
   font-size: 10px;

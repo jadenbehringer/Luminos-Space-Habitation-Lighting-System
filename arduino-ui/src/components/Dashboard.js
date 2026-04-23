@@ -12,7 +12,14 @@ export default function Dashboard() {
   const data = useLiveData();
   return (
     <div className={styles.dash}>
-      <TopBar missionTime={data.missionTime} alertLevel={data.alertLevel} />
+      <TopBar
+        missionTime={data.missionTime}
+        alertLevel={data.alertLevel}
+        serialSupported={data.serialSupported}
+        serialConnected={data.serialConnected}
+        serialError={data.serialError}
+        onConnectSerial={data.connectSerial}
+      />
       <div className={styles.grid}>
         <CrewPanel orbitPct={data.orbitPct} orbitPhase={data.orbitPhase} />
         <div className={styles.center}>

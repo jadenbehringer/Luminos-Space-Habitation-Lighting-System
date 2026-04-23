@@ -13,6 +13,8 @@ export default function TopBar({
   serialConnected,
   serialError,
   onConnectSerial,
+  bridgeReachable,
+  bulbOnline,
 }) {
   const key = alertLevel ?? 'null';
   const { label, cls } = STATUS[key];
@@ -27,6 +29,12 @@ export default function TopBar({
             : serialConnected
               ? 'ARDUINO LUX LIVE'
               : 'SIM MODE'}
+        </span>
+        <span className={`${styles.protoPill} ${bridgeReachable ? styles.protoOk : styles.protoBad}`}>
+          BRIDGE {bridgeReachable ? 'ONLINE' : 'OFFLINE'}
+        </span>
+        <span className={`${styles.protoPill} ${bulbOnline ? styles.protoOk : styles.protoBad}`}>
+          BULB {bulbOnline ? 'CONNECTED' : 'DISCONNECTED'}
         </span>
         {serialSupported && !serialConnected && (
           <button className={styles.serialBtn} onClick={onConnectSerial} type="button">

@@ -7,11 +7,11 @@
 
 .grid {
   display: grid;
-  grid-template-columns: 280px 1fr 220px;
+  grid-template-columns: 280px minmax(0, 1fr) 320px;
   flex: 1;
   gap: 1px;
   background: rgba(0, 180, 255, 0.06);
-  min-height: calc(100vh - 90px);
+  min-height: calc(100vh - 130px);
 }
 
 .center {
@@ -19,4 +19,16 @@
   flex-direction: column;
   background: #080d1a;
   overflow-y: auto;
+}
+
+@media (max-width: 1200px) {
+  .grid {
+    grid-template-columns: 240px minmax(0, 1fr) 280px;
+  }
+}
+
+@media (max-width: 980px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
 }

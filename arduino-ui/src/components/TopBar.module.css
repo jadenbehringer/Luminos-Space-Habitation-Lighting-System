@@ -31,6 +31,27 @@
   color: rgba(0, 200, 255, 0.75);
 }
 
+.protoPill {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 1px;
+  padding: 3px 8px;
+  border-radius: 12px;
+  border: 0.5px solid;
+}
+
+.protoOk {
+  border-color: rgba(0, 255, 136, 0.35);
+  color: rgba(0, 255, 136, 0.72);
+  background: rgba(0, 255, 136, 0.05);
+}
+
+.protoBad {
+  border-color: rgba(255, 122, 122, 0.38);
+  color: rgba(255, 122, 122, 0.85);
+  background: rgba(255, 122, 122, 0.06);
+}
+
 .serialBtn {
   border: 0.5px solid rgba(0, 200, 255, 0.45);
   background: rgba(0, 200, 255, 0.08);

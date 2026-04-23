@@ -6,17 +6,17 @@ const LEVELS = {
   null:      { label: 'NOMINAL',   symbol: '●', cls: 'nominal' },
 };
 
-export default function AlertBar({ episode, reward, solarAlert, alertLevel, lux }) {
+export default function AlertBar({ alertLevel, lux }) {
   const key = alertLevel ?? 'null';
   const { label, symbol, cls } = LEVELS[key];
 
   let message;
   if (alertLevel === 'emergency') {
-    message = 'SOLAR FLARE DETECTED — ENGAGING EMERGENCY BLACKOUT PROTOCOL';
+    message = `SYSTEM ALERT — CURRENT LUX ${lux}`;
   } else if (alertLevel === 'caution') {
-    message = `LUX OUT OF TOLERANCE — CURRENT: ${lux} LUX  TARGET: 320 LUX`;
+    message = `LUX OUT OF RANGE — CURRENT ${lux}`;
   } else {
-    message = `SYSTEM NOMINAL — ML MODEL TRAINING — EPISODE ${episode} — REWARD: +${reward}`;
+    message = `SYSTEM NOMINAL — CURRENT LUX ${lux}`;
   }
 
   return (

@@ -1,16 +1,17 @@
 import { useLiveData } from '../hooks/useLiveData';
+import { useTapoBridge } from '../hooks/useTapoBridge';
 import TopBar from './TopBar';
 import CrewPanel from './CrewPanel';
-import LightGauge from './LightGauge';
-import LightChart from './LightChart';
-import ProfilesPanel from './ProfilesPanel';
-import ServosPanel from './ServosPanel';
 import AlertBar from './AlertBar';
 import TapoControlPanel from './TapoControlPanel';
+import LightChart from './LightChart';
+import ProfilesPanel from './ProfilesPanel';
 import styles from './Dashboard.module.css';
 
 export default function Dashboard() {
   const data = useLiveData();
+  const bridgeData = useTapoBridge(data.lux);
+
   return (
     <div className={styles.dash}>
       <TopBar
@@ -20,18 +21,18 @@ export default function Dashboard() {
         serialConnected={data.serialConnected}
         serialError={data.serialError}
         onConnectSerial={data.connectSerial}
+        bridgeReachable={bridgeData.bridgeReachable}
+        bulbOnline={bridgeData.bridge.online}
       />
       <div className={styles.grid}>
-        <CrewPanel orbitPct={data.orbitPct} orbitPhase={data.orbitPhase} />
+        <CrewPanel />
         <div className={styles.center}>
-          <LightGauge lux={data.lux} raw={data.raw} circadian={data.circadian} fused={data.fused} />
-          <TapoControlPanel lux={data.lux} />
+          <TapoControlPanel lux={data.lux} bridgeData={bridgeData} />
           <LightChart history={data.history} />
-          <ProfilesPanel activeProfile={data.activeProfile} mlWeights={data.mlWeights} />
         </div>
-        <ServosPanel servoPositions={data.servoPositions} solarDelta={data.solarDelta} solarAlert={data.solarAlert} />
+        <ProfilesPanel activeProfile={data.activeProfile} />
       </div>
-      <AlertBar episode={data.episode} reward={data.reward} solarAlert={data.solarAlert} alertLevel={data.alertLevel} lux={data.lux} />
+      <AlertBar alertLevel={data.alertLevel} lux={data.lux} />
     </div>
   );
 }

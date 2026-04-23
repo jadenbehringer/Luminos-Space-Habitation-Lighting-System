@@ -24,7 +24,7 @@ export function useLiveData() {
     solarDelta: 2,
     solarAlert: false,
     alertLevel: null,
-    activeProfile: 'circadian',
+    activeProfile: 'dawn',
     serialSupported: typeof navigator !== 'undefined' && 'serial' in navigator,
     serialConnected: false,
     serialError: null,
@@ -184,9 +184,17 @@ export function useLiveData() {
       const w2 = parseFloat((1.0 + Math.cos(t / 35) * 0.4).toFixed(2));
       const w3 = parseFloat((0.8 + Math.sin(t / 50) * 0.3).toFixed(2));
 
-      let activeProfile = 'circadian';
-      if (lux >= 300) activeProfile = 'work';
-      else if (lux < 30) activeProfile = 'sleep';
+      let activeProfile = 'sleep';
+      if (lux < 30) activeProfile = 'sleep';
+      else if (lux < 80) activeProfile = 'dawn';
+      else if (lux < 120) activeProfile = 'dusk';
+      else if (lux < 160) activeProfile = 'leisure';
+      else if (lux < 200) activeProfile = 'hygeine';
+      else if (lux < 240) activeProfile = 'meal';
+      else if (lux < 300) activeProfile = 'exercise';
+      else if (lux < 360) activeProfile = 'maitenance';
+      else if (lux < 430) activeProfile = 'eva-prep';
+      else activeProfile = 'research';
 
       // Three-level alert per NASA SSP_50005 ISS Human Integration Standard §9.4.4.3
       // Emergency (class 1) = solar flare; Caution (class 3) = lux out of tolerance

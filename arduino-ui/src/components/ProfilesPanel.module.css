@@ -2,6 +2,7 @@
   background: #080d1a;
   padding: 20px 24px;
   flex: 1;
+  overflow-y: auto;
 }
 
 .label {
@@ -15,9 +16,8 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 10px;
-  margin-bottom: 16px;
 }
 
 .card {
@@ -57,72 +57,25 @@
   font-size: 10px;
   letter-spacing: 1px;
   color: #e0eeff;
-  margin-bottom: 4px;
-}
-
-.desc {
-  font-size: 11px;
-  color: rgba(200, 216, 240, 0.4);
-  line-height: 1.4;
   margin-bottom: 8px;
 }
 
-.target {
-  font-family: 'Space Mono', monospace;
-  font-size: 9px;
-  color: rgba(0, 200, 255, 0.6);
-}
-
-.mlBox {
-  background: rgba(100, 50, 200, 0.07);
-  border: 0.5px solid rgba(100, 50, 200, 0.2);
-  border-radius: 8px;
-  padding: 14px;
-}
-
-.mlLabel {
-  font-family: 'Space Mono', monospace;
-  font-size: 8px;
-  letter-spacing: 1.5px;
-  color: rgba(160, 128, 255, 0.6);
-  text-transform: uppercase;
-  margin-bottom: 10px;
-}
-
-.mlRow {
+.metricRow {
+  width: 100%;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 7px;
+  margin-top: 3px;
+}
+
+.metricLabel {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  color: rgba(200, 216, 240, 0.58);
+}
+
+.metricValue {
+  font-family: 'Space Mono', monospace;
   font-size: 10px;
-  color: rgba(200, 216, 240, 0.5);
-}
-
-.mlName {
-  font-family: 'Space Mono', monospace;
-  font-size: 9px;
-  min-width: 72px;
-}
-
-.mlBarBg {
-  flex: 1;
-  height: 3px;
-  background: rgba(100, 50, 200, 0.15);
-  border-radius: 2px;
-  overflow: hidden;
-}
-
-.mlBarFill {
-  height: 100%;
-  background: #a080ff;
-  border-radius: 2px;
-  transition: width 0.8s ease;
-}
-
-.mlWeight {
-  font-family: 'Space Mono', monospace;
-  font-size: 9px;
-  color: #a080ff;
-  min-width: 30px;
-  text-align: right;
+  color: rgba(0, 200, 255, 0.82);
 }

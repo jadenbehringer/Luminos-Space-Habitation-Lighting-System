@@ -92,6 +92,10 @@ export function useTapoBridge(currentLux) {
     await postJson('/auto', { enabled });
   }, [postJson]);
 
+  const setBrightness = useCallback(async (brightness) => {
+    await postJson('/brightness', { brightness: Number(brightness) });
+  }, [postJson]);
+
   return {
     bridge,
     bridgeReachable,
@@ -102,6 +106,7 @@ export function useTapoBridge(currentLux) {
     },
     applyTarget,
     setAutoEnabled,
+    setBrightness,
     bridgeUrl: BASE_URL,
   };
 }

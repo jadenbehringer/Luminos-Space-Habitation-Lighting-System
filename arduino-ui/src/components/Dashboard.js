@@ -11,6 +11,15 @@ export default function Dashboard() {
   const data = useLiveData();
   const bridgeData = useTapoBridge(data.lux);
 
+  const handleProfileClick = (profile) => {
+    const target = profile.targetLux;
+    if (bridgeData.bridge.autoEnabled) {
+      bridgeData.setTargetLevel(target);
+    } else if (bridgeData.bridgeReachable && bridgeData.bridge.online) {
+      bridgeData.startTemporaryAuto(target);
+    }
+  };
+
   return (
     <div className={styles.dash}>
       <TopBar
@@ -28,7 +37,7 @@ export default function Dashboard() {
           <TapoControlPanel lux={data.lux} bridgeData={bridgeData} writeSerial={data.writeSerial} />
           <LightChart history={data.history} />
         </div>
-        <ProfilesPanel activeProfile={data.activeProfile} />
+        <ProfilesPanel activeProfile={data.activeProfile} onProfileClick={handleProfileClick} />
       </div>
     </div>
   );

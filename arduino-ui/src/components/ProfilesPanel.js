@@ -1,7 +1,7 @@
 import { PROFILES } from '../data/dummy';
 import styles from './ProfilesPanel.module.css';
 
-export default function ProfilesPanel({ activeProfile }) {
+export default function ProfilesPanel({ activeProfile, onProfileClick }) {
   const sortedProfiles = [...PROFILES].sort((a, b) => a.targetLux - b.targetLux);
 
   return (
@@ -10,7 +10,11 @@ export default function ProfilesPanel({ activeProfile }) {
 
       <div className={styles.grid}>
         {sortedProfiles.map((p) => (
-          <div key={p.id} className={`${styles.card} ${activeProfile === p.id ? styles.active : ''}`}>
+          <div 
+            key={p.id} 
+            className={`${styles.card} ${activeProfile === p.id ? styles.active : ''}`}
+            onClick={() => onProfileClick && onProfileClick(p)}
+          >
             {activeProfile === p.id && <div className={styles.activeBadge}>ACTIVE</div>}
             <div className={styles.icon}>{p.icon}</div>
             <div className={styles.name}>{p.name}</div>

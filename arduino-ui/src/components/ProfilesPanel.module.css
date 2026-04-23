@@ -27,6 +27,12 @@
   padding: 14px;
   position: relative;
   transition: border-color 0.3s, background 0.3s;
+  cursor: pointer;
+}
+
+.card:hover {
+  border-color: rgba(0, 200, 255, 0.3);
+  background: rgba(0, 40, 90, 0.3);
 }
 
 .card.active {

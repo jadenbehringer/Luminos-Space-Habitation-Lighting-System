@@ -19,6 +19,7 @@ export function useTapoBridge(currentLux) {
   const [bridgeReachable, setBridgeReachable] = useState(false);
   const [targetInput, setTargetInput] = useState('120');
   const [editingTarget, setEditingTarget] = useState(false);
+  const [tempAutoTarget, setTempAutoTarget] = useState(null);
 
   const fetchState = useCallback(async () => {
     const res = await fetch(`${BASE_URL}/state`);
@@ -101,6 +102,32 @@ export function useTapoBridge(currentLux) {
     await postJson('/power', { on: Boolean(on) });
   }, [postJson]);
 
+  const setTargetLevel = useCallback(async (lux) => {
+    if (!Number.isFinite(lux)) return;
+    setTargetInput(String(lux));
+    await postJson('/target', { targetLux: Number(lux) });
+    setEditingTarget(false);
+  }, [postJson]);
+
+  const startTemporaryAuto = useCallback(async (lux) => {
+    await setTargetLevel(lux);
+    await setAutoEnabled(true);
+    setTempAutoTarget(Number(lux));
+  }, [setTargetLevel, setAutoEnabled]);
+
+  useEffect(() => {
+    if (tempAutoTarget !== null) {
+      if (!bridge.autoEnabled) {
+        setTempAutoTarget(null);
+      } else if (bridge.currentLux !== null) {
+        if (Math.abs(bridge.currentLux - tempAutoTarget) <= (bridge.toleranceLux || 5) + 1) {
+          setAutoEnabled(false);
+          setTempAutoTarget(null);
+        }
+      }
+    }
+  }, [bridge.currentLux, bridge.autoEnabled, bridge.toleranceLux, tempAutoTarget, setAutoEnabled]);
+
   return {
     bridge,
     bridgeReachable,
@@ -113,6 +140,8 @@ export function useTapoBridge(currentLux) {
     setAutoEnabled,
     setBrightness,
     setPower,
+    setTargetLevel,
+    startTemporaryAuto,
     bridgeUrl: BASE_URL,
   };
 }

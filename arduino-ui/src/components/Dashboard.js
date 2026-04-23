@@ -6,6 +6,7 @@ import LightChart from './LightChart';
 import ProfilesPanel from './ProfilesPanel';
 import ServosPanel from './ServosPanel';
 import AlertBar from './AlertBar';
+import TapoControlPanel from './TapoControlPanel';
 import styles from './Dashboard.module.css';
 
 export default function Dashboard() {
@@ -24,6 +25,7 @@ export default function Dashboard() {
         <CrewPanel orbitPct={data.orbitPct} orbitPhase={data.orbitPhase} />
         <div className={styles.center}>
           <LightGauge lux={data.lux} raw={data.raw} circadian={data.circadian} fused={data.fused} />
+          <TapoControlPanel lux={data.lux} />
           <LightChart history={data.history} />
           <ProfilesPanel activeProfile={data.activeProfile} mlWeights={data.mlWeights} />
         </div>

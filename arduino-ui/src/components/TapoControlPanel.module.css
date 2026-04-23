@@ -1,0 +1,116 @@
+.section {
+  border-top: 0.5px solid rgba(0, 180, 255, 0.15);
+  padding: 14px 16px;
+  background: rgba(0, 20, 50, 0.35);
+}
+
+.label {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: #00c8ff;
+  letter-spacing: 1.2px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 12px;
+}
+
+.k {
+  color: rgba(200, 216, 240, 0.72);
+  font-family: 'Space Mono', monospace;
+}
+
+.ok {
+  color: #00ff88;
+  font-family: 'Space Mono', monospace;
+}
+
+.bad {
+  color: #ff7a7a;
+  font-family: 'Space Mono', monospace;
+}
+
+.form {
+  margin: 12px 0;
+}
+
+.inputLabel {
+  display: block;
+  margin-bottom: 5px;
+  color: rgba(200, 216, 240, 0.7);
+  font-size: 11px;
+  font-family: 'Space Mono', monospace;
+}
+
+.inputWrap {
+  display: flex;
+  gap: 8px;
+}
+
+.input {
+  flex: 1;
+  background: rgba(0, 30, 70, 0.7);
+  border: 0.5px solid rgba(0, 200, 255, 0.35);
+  color: #d8ebff;
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-family: 'Space Mono', monospace;
+}
+
+.btn {
+  background: rgba(0, 200, 255, 0.1);
+  color: #00c8ff;
+  border: 0.5px solid rgba(0, 200, 255, 0.45);
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+}
+
+.warn {
+  border-color: rgba(255, 200, 0, 0.6);
+  color: #ffc800;
+  background: rgba(255, 200, 0, 0.08);
+}
+
+.stats {
+  margin-top: 10px;
+  display: grid;
+  gap: 4px;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+}
+
+.stats > div {
+  display: flex;
+  justify-content: space-between;
+  color: #d8ebff;
+}
+
+.msg {
+  margin-top: 10px;
+  color: #00c8ff;
+  font-size: 11px;
+  font-family: 'Space Mono', monospace;
+}
+
+.err {
+  margin-top: 4px;
+  color: #ff7a7a;
+  font-size: 11px;
+  font-family: 'Space Mono', monospace;
+}
+
+.url {
+  margin-top: 8px;
+  color: rgba(200, 216, 240, 0.45);
+  font-size: 10px;
+  font-family: 'Space Mono', monospace;
+}

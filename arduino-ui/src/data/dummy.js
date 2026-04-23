@@ -1,0 +1,95 @@
+export const CREW = [
+  {
+    id: 'ck',
+    initials: 'CK',
+    name: 'Cmdr. Chen, K.',
+    role: 'Mission Commander',
+    activity: 'WORKING',
+    activityClass: 'work',
+    targetLux: 320,
+    overrides: 3,
+    active: true,
+    color: '#00c8ff',
+    colorBg: 'rgba(0,200,255,0.12)',
+  },
+  {
+    id: 'np',
+    initials: 'NP',
+    name: 'Dr. Patel, N.',
+    role: 'Flight Surgeon',
+    activity: 'SLEEP CYCLE',
+    activityClass: 'sleep',
+    targetLux: 10,
+    overrides: 1,
+    active: false,
+    color: '#a080ff',
+    colorBg: 'rgba(100,50,200,0.15)',
+  },
+  {
+    id: 'rv',
+    initials: 'RV',
+    name: 'Spc. Vasquez, R.',
+    role: 'Mission Specialist',
+    activity: 'EVA PREP',
+    activityClass: 'eva',
+    targetLux: 50,
+    overrides: 0,
+    active: false,
+    color: '#ffc800',
+    colorBg: 'rgba(255,200,0,0.1)',
+  },
+  {
+    id: 'lm',
+    initials: 'LM',
+    name: 'Eng. Müller, L.',
+    role: 'Systems Engineer',
+    activity: 'EXERCISE',
+    activityClass: 'exercise',
+    targetLux: 200,
+    overrides: 2,
+    active: false,
+    color: '#00ff88',
+    colorBg: 'rgba(0,255,136,0.1)',
+  },
+];
+
+export const PROFILES = [
+  {
+    id: 'work',
+    icon: '☀',
+    name: 'WORK',
+    desc: 'Full spectrum, high clarity for task performance',
+    targetRange: '300–600 lux',
+    servoPositions: [150, 160, 170, 145],
+  },
+  {
+    id: 'circadian',
+    icon: '◑',
+    name: 'CIRCADIAN',
+    desc: 'Balanced filtering aligned to orbital day cycle',
+    targetRange: '100–300 lux',
+    servoPositions: [90, 85, 95, 80],
+  },
+  {
+    id: 'sleep',
+    icon: '☾',
+    name: 'SLEEP',
+    desc: 'Maximum blue light reduction, near blackout',
+    targetRange: '0–10 lux',
+    servoPositions: [10, 15, 10, 5],
+  },
+];
+
+export const SERVOS = [
+  { id: 's1', name: 'Window A', location: 'Main panel · Blue filter', live: true },
+  { id: 's2', name: 'Window B', location: 'Starboard · Filter stack', live: false },
+  { id: 's3', name: 'Window C', location: 'Port · No filter', live: false },
+  { id: 's4', name: 'Window D', location: 'Cupola · Dual filter', live: false },
+];
+
+export const FILTERS = [
+  { id: 'a', label: 'Filter A', engaged: true },
+  { id: 'b', label: 'Filter B', engaged: false },
+  { id: 'c', label: 'Filter C', engaged: false },
+  { id: 'd', label: 'Filter D', engaged: false },
+];

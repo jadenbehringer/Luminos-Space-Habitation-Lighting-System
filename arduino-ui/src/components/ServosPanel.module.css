@@ -1,0 +1,178 @@
+.panel {
+  background: #080d1a;
+  border-left: 0.5px solid rgba(0, 180, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.topLabel {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: rgba(0, 200, 255, 0.7);
+  text-transform: uppercase;
+  padding: 16px 20px 12px;
+  border-bottom: 0.5px solid rgba(0, 180, 255, 0.08);
+}
+
+.servoBlock {
+  padding: 14px 20px;
+  border-bottom: 0.5px solid rgba(0, 180, 255, 0.06);
+}
+
+.servoHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2px;
+}
+
+.servoName {
+  font-size: 12px;
+  font-weight: 500;
+  color: #c8d8f0;
+}
+
+.badge {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  letter-spacing: 0.5px;
+}
+
+.badgeLive {
+  background: rgba(0, 200, 255, 0.1);
+  color: #00c8ff;
+}
+
+.badgeSim {
+  background: rgba(100, 100, 120, 0.15);
+  color: rgba(200, 216, 240, 0.3);
+}
+
+.servoLoc {
+  font-size: 10px;
+  color: rgba(200, 216, 240, 0.55);
+  margin-bottom: 8px;
+}
+
+.barWrap {
+  background: rgba(0, 30, 70, 0.5);
+  border-radius: 4px;
+  height: 5px;
+  margin-bottom: 4px;
+  overflow: hidden;
+}
+
+.bar {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.8s ease;
+}
+
+.servoVals {
+  display: flex;
+  justify-content: space-between;
+  font-size: 9px;
+  color: rgba(200, 216, 240, 0.5);
+  font-family: 'Space Mono', monospace;
+}
+
+.filterBlock {
+  padding: 14px 20px;
+  border-bottom: 0.5px solid rgba(0, 180, 255, 0.06);
+}
+
+.subLabel {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 1.5px;
+  color: rgba(0, 200, 255, 0.65);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.filterRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.filterName {
+  font-size: 11px;
+  color: rgba(200, 216, 240, 0.65);
+}
+
+.filterState {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+
+.filterEngaged {
+  color: #00c8ff;
+}
+
+.filterStandby {
+  color: rgba(200, 216, 240, 0.28);
+}
+
+.filterIcon {
+  font-size: 7px;
+}
+
+.flareBlock {
+  padding: 14px 20px;
+  flex: 1;
+}
+
+.flareStatus {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.flareIcon {
+  font-size: 9px;
+  transition: color 0.3s;
+}
+
+.flareIconAlert {
+  color: #ff4444;
+  animation: blink 0.8s infinite;
+}
+
+.flareIconNominal {
+  color: rgba(0, 255, 136, 0.6);
+}
+
+.flareTextAlert {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  color: #ff4444;
+  letter-spacing: 0.5px;
+}
+
+.flareTextNominal {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  color: rgba(0, 255, 136, 0.6);
+}
+
+.delta {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  color: rgba(200, 216, 240, 0.4);
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}

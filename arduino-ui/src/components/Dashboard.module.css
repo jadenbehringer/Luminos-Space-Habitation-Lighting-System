@@ -1,0 +1,22 @@
+.dash {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #060b18;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 280px 1fr 220px;
+  flex: 1;
+  gap: 1px;
+  background: rgba(0, 180, 255, 0.06);
+  min-height: calc(100vh - 90px);
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  background: #080d1a;
+  overflow-y: auto;
+}

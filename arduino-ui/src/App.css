@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #060b18;
+  color: #c8d8f0;
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+}
+
+:root {
+  --blue: #00c8ff;
+  --green: #00ff88;
+  --amber: #ffc800;
+  --purple: #a080ff;
+  --red: #ff4444;
+  --orange: #ff6b35;
+  --surface: rgba(0, 30, 70, 0.4);
+  --border: rgba(0, 180, 255, 0.12);
+  --border-bright: rgba(0, 200, 255, 0.4);
+  --text-dim: rgba(200, 216, 240, 0.35);
+  --text-mid: rgba(200, 216, 240, 0.55);
+  --mono: 'Space Mono', monospace;
+}
+
+.mono { font-family: var(--mono); }

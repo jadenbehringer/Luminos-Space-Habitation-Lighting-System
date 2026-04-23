@@ -1,0 +1,18 @@
+.section {
+  background: #080d1a;
+  padding: 20px 24px;
+  border-bottom: 0.5px solid rgba(0, 180, 255, 0.08);
+}
+
+.label {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: rgba(0, 200, 255, 0.5);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.chartWrap {
+  width: 100%;
+}

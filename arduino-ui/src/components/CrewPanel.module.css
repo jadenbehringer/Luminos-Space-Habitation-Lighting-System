@@ -1,0 +1,108 @@
+.panel {
+  background: #080d1a;
+  padding: 20px;
+  border-right: 0.5px solid rgba(0, 180, 255, 0.08);
+  overflow-y: auto;
+}
+
+.label {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: rgba(0, 200, 255, 0.7);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.card {
+  background: rgba(0, 30, 70, 0.4);
+  border: 0.5px solid rgba(0, 180, 255, 0.12);
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 10px;
+  position: relative;
+  transition: border-color 0.3s;
+}
+
+.card.active {
+  border-color: rgba(0, 200, 255, 0.4);
+  background: rgba(0, 40, 100, 0.4);
+}
+
+.card.active::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 2px;
+  background: #00c8ff;
+  border-radius: 10px 0 0 10px;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.name {
+  font-size: 13px;
+  font-weight: 500;
+  color: #e0eeff;
+  margin-bottom: 2px;
+}
+
+.role {
+  font-size: 11px;
+  color: rgba(200, 216, 240, 0.58);
+  margin-bottom: 8px;
+}
+
+.activity {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 1px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: 8px;
+}
+
+.meta {
+  font-size: 10px;
+  color: rgba(200, 216, 240, 0.55);
+  margin-top: 2px;
+}
+
+.orbital {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.ring {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0, 200, 255, 0.2);
+  border-top-color: #00c8ff;
+  animation: spin 8s linear infinite;
+  margin: 0 auto 12px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.orbitInfo {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  color: rgba(200, 216, 240, 0.58);
+  letter-spacing: 1px;
+  line-height: 2.2;
+}

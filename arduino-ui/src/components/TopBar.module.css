@@ -1,0 +1,68 @@
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  border-bottom: 0.5px solid rgba(0, 180, 255, 0.15);
+  background: rgba(0, 20, 50, 0.6);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  color: #00c8ff;
+  letter-spacing: 3px;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.pill {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  padding: 4px 14px;
+  border-radius: 20px;
+  border: 0.5px solid;
+  letter-spacing: 1.5px;
+}
+
+/* Quiet-dark: nominal is subdued so alert states clearly pop out */
+.nominal {
+  border-color: rgba(0, 255, 136, 0.4);
+  color: rgba(0, 255, 136, 0.7);
+  background: rgba(0, 255, 136, 0.06);
+}
+
+/* Yellow/amber = Caution (class 3) */
+.caution {
+  border-color: rgba(255, 200, 0, 0.6);
+  color: #ffc800;
+  background: rgba(255, 200, 0, 0.1);
+  animation: pulse 2s infinite;
+}
+
+/* Red = Emergency (class 1) */
+.emergency {
+  border-color: rgba(255, 68, 68, 0.7);
+  color: #ff4444;
+  background: rgba(255, 68, 68, 0.12);
+  animation: pulse 0.8s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.time {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: rgba(200, 216, 240, 0.55);
+}

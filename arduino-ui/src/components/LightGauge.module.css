@@ -1,0 +1,85 @@
+.section {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding: 24px;
+  background: #080d1a;
+  border-bottom: 0.5px solid rgba(0, 180, 255, 0.08);
+}
+
+.gaugeWrap {
+  position: relative;
+  width: 160px;
+  height: 160px;
+  flex-shrink: 0;
+}
+
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.value {
+  font-family: 'Space Mono', monospace;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
+  transition: color 0.8s ease;
+}
+
+.unit {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  color: rgba(200, 216, 240, 0.5);
+  letter-spacing: 2px;
+  margin-top: 4px;
+}
+
+.statusLabel {
+  font-family: 'Space Mono', monospace;
+  font-size: 7px;
+  letter-spacing: 1.5px;
+  margin-top: 4px;
+  transition: color 0.8s ease;
+}
+
+.stats {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.statBox {
+  background: rgba(0, 30, 70, 0.4);
+  border: 0.5px solid rgba(0, 180, 255, 0.1);
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.statLabel {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  color: rgba(200, 216, 240, 0.6);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.statValue {
+  font-family: 'Space Mono', monospace;
+  font-size: 20px;
+  font-weight: 700;
+  transition: color 0.5s ease;
+}
+
+.statSub {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  color: rgba(200, 216, 240, 0.45);
+  margin-top: 2px;
+  transition: color 0.5s ease;
+}

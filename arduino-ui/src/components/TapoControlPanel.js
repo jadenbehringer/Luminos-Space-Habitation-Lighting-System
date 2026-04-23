@@ -14,7 +14,24 @@ export default function TapoControlPanel({ lux, bridgeData, writeSerial }) {
   } = bridgeData;
   const [brightnessInput, setBrightnessInput] = useState(String(bridge.brightness ?? 0));
   const [windowFilter, setWindowFilter] = useState(50);
-  const currentBlueLightLevel = Math.max(0, Math.min(100, Math.round((Number(lux) || 0) * 0.18)));
+  const [effectiveFilter, setEffectiveFilter] = useState(50);
+
+  useEffect(() => {
+    setEffectiveFilter(prev => {
+      const diff = windowFilter - prev;
+      if (Math.abs(diff) < 0.5) return windowFilter;
+      // 20% chance to hold value simulating measurement delay
+      if (Math.random() < 0.2) return prev;
+      // Otherwise move 15% to 35% of the remaining distance
+      return prev + diff * (0.15 + Math.random() * 0.2);
+    });
+  }, [lux, windowFilter]);
+
+  const t = Date.now() / 2000;
+  const minBlue = 3000 - (2800 * (effectiveFilter / 100));
+  const maxBlue = 3800 - (3400 * (effectiveFilter / 100));
+  const noise = Math.max(0, Math.min(1, (Math.sin(t) + Math.sin(t * 3.4 + 1.2)) / 4 + 0.5));
+  const currentBlueLightLevel = Math.round(minBlue + (maxBlue - minBlue) * noise);
 
   useEffect(() => {
     setBrightnessInput(String(Math.round(bridge.brightness ?? 0)));

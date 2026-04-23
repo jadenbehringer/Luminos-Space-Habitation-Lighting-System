@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './TapoControlPanel.module.css';
 
-export default function TapoControlPanel({ lux, bridgeData }) {
+export default function TapoControlPanel({ lux, bridgeData, writeSerial }) {
   const {
     bridge,
     bridgeReachable,
@@ -37,6 +37,10 @@ export default function TapoControlPanel({ lux, bridgeData }) {
   const onWindowFilterChange = (e) => {
     const next = Number(e.target.value);
     setWindowFilter(next);
+    if (writeSerial) {
+      const angle = Math.round(180 - (next / 100) * 180);
+      writeSerial(String(angle));
+    }
   };
 
   return (

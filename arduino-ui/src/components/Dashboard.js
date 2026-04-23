@@ -25,7 +25,7 @@ export default function Dashboard() {
       <div className={styles.grid}>
         <CrewPanel />
         <div className={styles.center}>
-          <TapoControlPanel lux={data.lux} bridgeData={bridgeData} />
+          <TapoControlPanel lux={data.lux} bridgeData={bridgeData} writeSerial={data.writeSerial} />
           <LightChart history={data.history} />
         </div>
         <ProfilesPanel activeProfile={data.activeProfile} />

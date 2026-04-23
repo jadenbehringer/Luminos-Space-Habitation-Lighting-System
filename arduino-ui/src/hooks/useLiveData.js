@@ -5,6 +5,7 @@ export function useLiveData() {
   const histRef = useRef(Array.from({ length: 60 }, () => 300 + Math.random() * 100));
   const sensorRef = useRef({ raw: null, voltage: null, lux: null, hasData: false });
   const readerRef = useRef(null);
+  const writerRef = useRef(null);
   const portRef = useRef(null);
   const connectSerialRef = useRef(async () => {});
 
@@ -60,6 +61,9 @@ export function useLiveData() {
         reader = port.readable.getReader();
       }
       readerRef.current = reader;
+      if (port.writable) {
+        writerRef.current = port.writable.getWriter();
+      }
 
       setData((prev) => ({ ...prev, serialConnected: true, serialError: null }));
 
@@ -93,6 +97,12 @@ export function useLiveData() {
         setData((prev) => ({ ...prev, serialConnected: false }));
         try {
           reader.releaseLock();
+        } catch (_) {}
+        try {
+          if (writerRef.current) {
+            writerRef.current.releaseLock();
+            writerRef.current = null;
+          }
         } catch (_) {}
       }
     };
@@ -134,6 +144,12 @@ export function useLiveData() {
           if (readerRef.current) {
             await readerRef.current.cancel();
             readerRef.current.releaseLock();
+          }
+        } catch (_) {}
+        try {
+          if (writerRef.current) {
+            writerRef.current.releaseLock();
+            writerRef.current = null;
           }
         } catch (_) {}
         try {
@@ -227,5 +243,13 @@ export function useLiveData() {
   return {
     ...data,
     connectSerial: () => connectSerialRef.current(),
+    writeSerial: async (text) => {
+      if (!writerRef.current) return;
+      try {
+        await writerRef.current.write(new TextEncoder().encode(text + '\n'));
+      } catch (err) {
+        console.error('Serial write error:', err);
+      }
+    },
   };
 }

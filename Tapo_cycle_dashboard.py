@@ -19,20 +19,20 @@ class TapoLuxController:
         self.password = PASSWORD
         self.ip_address = IP_ADDRESS
 
-        self.control_interval_s = float(os.getenv("TAPO_CONTROL_INTERVAL_S", "0.03"))
+        self.control_interval_s = float(os.getenv("TAPO_CONTROL_INTERVAL_S", "0.04"))
         self.tolerance_lux = float(os.getenv("TAPO_TOLERANCE_LUX", "25.0"))
         self.min_step = int(os.getenv("TAPO_BRIGHTNESS_MIN_STEP", "1"))
-        self.max_step = int(os.getenv("TAPO_BRIGHTNESS_MAX_STEP", "6"))
-        self.exp_small_error_lux = float(os.getenv("TAPO_EXP_SMALL_ERROR_LUX", "60.0"))
-        self.exp_gain = float(os.getenv("TAPO_EXP_GAIN", "0.04"))
-        self.command_interval_s = float(os.getenv("TAPO_COMMAND_INTERVAL_S", "0.16"))
-        self.close_error_lux = float(os.getenv("TAPO_CLOSE_ERROR_LUX", "45.0"))
-        self.close_command_interval_s = float(os.getenv("TAPO_CLOSE_COMMAND_INTERVAL_S", "0.5"))
-        self.reverse_damping_s = float(os.getenv("TAPO_REVERSE_DAMPING_S", "0.6"))
+        self.max_step = int(os.getenv("TAPO_BRIGHTNESS_MAX_STEP", "5")) # Heavily reduce max step to smooth out big jumps
+        self.exp_small_error_lux = float(os.getenv("TAPO_EXP_SMALL_ERROR_LUX", "100.0"))
+        self.exp_gain = float(os.getenv("TAPO_EXP_GAIN", "0.02"))
+        self.command_interval_s = float(os.getenv("TAPO_COMMAND_INTERVAL_S", "0.8")) # Allow physical bulb response time
+        self.close_error_lux = float(os.getenv("TAPO_CLOSE_ERROR_LUX", "70.0"))
+        self.close_command_interval_s = float(os.getenv("TAPO_CLOSE_COMMAND_INTERVAL_S", "2.5")) # Extra padding near target
+        self.reverse_damping_s = float(os.getenv("TAPO_REVERSE_DAMPING_S", "3.0")) # Big damping on direction toggle
         self.min_brightness = int(os.getenv("TAPO_MIN_BRIGHTNESS", "1"))
         self.max_brightness = int(os.getenv("TAPO_MAX_BRIGHTNESS", "100"))
         self.color_temp = int(os.getenv("TAPO_COLOR_TEMP", "4000"))
-        self.moving_avg_window = max(1, int(os.getenv("TAPO_MOVING_AVG_WINDOW", "5")))
+        self.moving_avg_window = max(1, int(os.getenv("TAPO_MOVING_AVG_WINDOW", "6"))) # Smooth out jitter
 
         self._lock = threading.Lock()
         self._device = None

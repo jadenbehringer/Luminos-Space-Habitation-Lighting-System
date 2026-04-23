@@ -8,17 +8,15 @@ const activityColors = {
   exercise: { bg: 'rgba(0,255,136,0.1)', color: '#00ff88' },
 };
 
-export default function CrewPanel({ activeProfile }) {
+export default function CrewPanel() {
   return (
     <div className={styles.panel}>
       <div className={styles.label}>Astronaut profiles</div>
 
       {CREW.map(member => {
         const ac = activityColors[member.activityClass];
-        const profileId = member.activity.toLowerCase().replace(' ', '-');
-        const isActive = profileId === activeProfile;
         return (
-          <div key={member.id} className={`${styles.card} ${isActive ? styles.active : ''}`}>
+          <div key={member.id} className={`${styles.card} ${member.active ? styles.active : ''}`}>
             <div className={styles.callsign}>{member.designation} {member.name}</div>
             <span className={styles.activity} style={{ background: ac.bg, color: ac.color }}>
               {member.activity}
@@ -26,7 +24,7 @@ export default function CrewPanel({ activeProfile }) {
             <div className={styles.meta}>
               Target lux: <span style={{ color: member.color, fontFamily: 'Space Mono, monospace' }}>{member.targetLux}</span>
             </div>
-            {isActive && (
+            {member.active && (
               <div className={styles.meta}>
                 Overrides: <span style={{ color: member.color, fontFamily: 'Space Mono, monospace' }}>{member.overrides}</span>
               </div>

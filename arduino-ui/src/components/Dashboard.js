@@ -15,7 +15,7 @@ export default function Dashboard() {
     const target = profile.targetLux;
     if (bridgeData.bridge.autoEnabled) {
       bridgeData.setTargetLevel(target);
-    } else if (bridgeData.bridgeReachable && bridgeData.bridge.online) {
+    } else {
       bridgeData.startTemporaryAuto(target);
     }
   };
@@ -32,7 +32,7 @@ export default function Dashboard() {
         bulbOnline={bridgeData.bridge.online}
       />
       <div className={styles.grid}>
-        <CrewPanel activeProfile={data.activeProfile} />
+        <CrewPanel />
         <div className={styles.center}>
           <TapoControlPanel lux={data.lux} bridgeData={bridgeData} writeSerial={data.writeSerial} />
           <LightChart history={data.history} />

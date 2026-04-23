@@ -10,6 +10,7 @@ export default function TapoControlPanel({ lux, bridgeData }) {
     applyTarget,
     setBrightness,
     setAutoEnabled,
+    setPower,
   } = bridgeData;
   const [brightnessInput, setBrightnessInput] = useState(String(bridge.brightness ?? 0));
   const [windowFilter, setWindowFilter] = useState(50);
@@ -98,6 +99,21 @@ export default function TapoControlPanel({ lux, bridgeData }) {
             {bridge.autoEnabled ? 'Disable' : 'Enable'}
           </button>
           <div className={styles.panelName}>Adaptive light control</div>
+        </div>
+
+        <div className={styles.controlCard}>
+          <div className={styles.autoState}>
+            {bridge.powerOn ? 'On' : 'Off'}
+          </div>
+          <button
+            className={`${styles.btn} ${bridge.powerOn ? styles.enabledBtn : ''}`}
+            type="button"
+            onClick={() => setPower(!bridge.powerOn)}
+            disabled={!bridgeReachable}
+          >
+            Turn {bridge.powerOn ? 'Off' : 'On'}
+          </button>
+          <div className={styles.panelName}>Bulb power</div>
         </div>
       </div>
 

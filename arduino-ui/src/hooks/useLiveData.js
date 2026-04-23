@@ -187,13 +187,13 @@ export function useLiveData() {
       let activeProfile = 'sleep';
       if (lux < 30) activeProfile = 'sleep';
       else if (lux < 80) activeProfile = 'dawn';
-      else if (lux < 120) activeProfile = 'dusk';
-      else if (lux < 160) activeProfile = 'leisure';
-      else if (lux < 200) activeProfile = 'hygeine';
-      else if (lux < 240) activeProfile = 'meal';
-      else if (lux < 300) activeProfile = 'exercise';
-      else if (lux < 360) activeProfile = 'maitenance';
-      else if (lux < 430) activeProfile = 'eva-prep';
+      else if (lux < 600) activeProfile = 'dusk';
+      else if (lux < 650) activeProfile = 'leisure';
+      else if (lux < 710) activeProfile = 'hygeine';
+      else if (lux < 750) activeProfile = 'meal';
+      else if (lux < 820) activeProfile = 'exercise';
+      else if (lux < 900) activeProfile = 'maitenance';
+      else if (lux < 980) activeProfile = 'eva-prep';
       else activeProfile = 'research';
 
       // Three-level alert per NASA SSP_50005 ISS Human Integration Standard §9.4.4.3

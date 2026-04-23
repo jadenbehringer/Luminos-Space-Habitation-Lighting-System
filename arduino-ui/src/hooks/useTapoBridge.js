@@ -5,6 +5,7 @@ const BASE_URL = process.env.REACT_APP_TAPO_BRIDGE_URL || 'http://127.0.0.1:8765
 export function useTapoBridge(currentLux) {
   const [bridge, setBridge] = useState({
     online: false,
+    powerOn: true,
     autoEnabled: false,
     targetLux: 120,
     currentLux: null,
@@ -96,6 +97,10 @@ export function useTapoBridge(currentLux) {
     await postJson('/brightness', { brightness: Number(brightness) });
   }, [postJson]);
 
+  const setPower = useCallback(async (on) => {
+    await postJson('/power', { on: Boolean(on) });
+  }, [postJson]);
+
   return {
     bridge,
     bridgeReachable,
@@ -107,6 +112,7 @@ export function useTapoBridge(currentLux) {
     applyTarget,
     setAutoEnabled,
     setBrightness,
+    setPower,
     bridgeUrl: BASE_URL,
   };
 }

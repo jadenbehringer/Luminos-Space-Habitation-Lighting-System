@@ -1,5 +1,7 @@
 import asyncio
+from collections import deque
 import json
+import math
 import os
 import threading
 import time
@@ -18,18 +20,23 @@ class TapoLuxController:
         self.ip_address = IP_ADDRESS
 
         self.control_interval_s = float(os.getenv("TAPO_CONTROL_INTERVAL_S", "0.03"))
-        self.tolerance_lux = float(os.getenv("TAPO_TOLERANCE_LUX", "15.0"))
+        self.tolerance_lux = float(os.getenv("TAPO_TOLERANCE_LUX", "25.0"))
         self.min_step = int(os.getenv("TAPO_BRIGHTNESS_MIN_STEP", "1"))
         self.max_step = int(os.getenv("TAPO_BRIGHTNESS_MAX_STEP", "6"))
-        self.error_gain = float(os.getenv("TAPO_BRIGHTNESS_ERROR_GAIN", "0.07"))
+        self.exp_small_error_lux = float(os.getenv("TAPO_EXP_SMALL_ERROR_LUX", "60.0"))
+        self.exp_gain = float(os.getenv("TAPO_EXP_GAIN", "0.04"))
         self.command_interval_s = float(os.getenv("TAPO_COMMAND_INTERVAL_S", "0.16"))
-        self.reverse_damping_s = float(os.getenv("TAPO_REVERSE_DAMPING_S", "0.45"))
+        self.close_error_lux = float(os.getenv("TAPO_CLOSE_ERROR_LUX", "45.0"))
+        self.close_command_interval_s = float(os.getenv("TAPO_CLOSE_COMMAND_INTERVAL_S", "0.5"))
+        self.reverse_damping_s = float(os.getenv("TAPO_REVERSE_DAMPING_S", "0.6"))
         self.min_brightness = int(os.getenv("TAPO_MIN_BRIGHTNESS", "1"))
         self.max_brightness = int(os.getenv("TAPO_MAX_BRIGHTNESS", "100"))
         self.color_temp = int(os.getenv("TAPO_COLOR_TEMP", "4000"))
+        self.moving_avg_window = max(1, int(os.getenv("TAPO_MOVING_AVG_WINDOW", "5")))
 
         self._lock = threading.Lock()
         self._device = None
+        self._lux_samples = deque(maxlen=self.moving_avg_window)
         self._last_sensor_ts = 0.0
         self._last_controlled_sensor_ts = 0.0
         self._last_command_ts = 0.0
@@ -38,6 +45,7 @@ class TapoLuxController:
 
         self.state = {
             "online": False,
+            "powerOn": True,
             "autoEnabled": False,
             "targetLux": 120.0,
             "currentLux": None,
@@ -60,6 +68,7 @@ class TapoLuxController:
 
     async def _connect_device(self, timeout_s=10, retries=3):
         client = ApiClient(self.username, self.password)
+        last_exc = None
 
         for attempt in range(1, retries + 1):
             try:
@@ -69,12 +78,13 @@ class TapoLuxController:
                     self.state["lastError"] = None
                 return device
             except Exception as exc:
+                last_exc = exc
                 with self._lock:
                     self.state["online"] = False
                     self.state["lastError"] = f"connect attempt {attempt} failed: {exc}"
                 await asyncio.sleep(1)
 
-        raise RuntimeError("Unable to connect to Tapo device")
+        raise RuntimeError(f"Unable to connect to Tapo device: {last_exc}")
 
     async def _ensure_device(self):
         if self._device is None:
@@ -90,12 +100,38 @@ class TapoLuxController:
 
         with self._lock:
             self.state["brightness"] = brightness
+            self.state["powerOn"] = True
             self.state["online"] = True
             self.state["lastAction"] = f"set brightness {brightness}%"
             self.state["lastError"] = None
 
+    async def _set_power_async(self, on):
+        device = await self._ensure_device()
+        if on:
+            await device.on()
+        else:
+            await device.off()
+
+        with self._lock:
+            self.state["powerOn"] = bool(on)
+            self.state["online"] = True
+            self.state["lastAction"] = "power on" if on else "power off"
+            self.state["lastError"] = None
+
     def apply_brightness(self, brightness):
         future = asyncio.run_coroutine_threadsafe(self._apply_brightness_async(brightness), self.loop)
+        try:
+            future.result(timeout=8)
+            return True, None
+        except Exception as exc:
+            with self._lock:
+                self._device = None
+                self.state["online"] = False
+                self.state["lastError"] = str(exc)
+            return False, str(exc)
+
+    def set_power(self, on):
+        future = asyncio.run_coroutine_threadsafe(self._set_power_async(bool(on)), self.loop)
         try:
             future.result(timeout=8)
             return True, None
@@ -116,6 +152,7 @@ class TapoLuxController:
                 auto_enabled = self.state["autoEnabled"]
                 target = self.state["targetLux"]
                 current = self.state["currentLux"]
+                lux_samples = tuple(self._lux_samples)
                 tolerance = self.state["toleranceLux"]
                 brightness = self.state["brightness"]
                 last_sensor_ts = self._last_sensor_ts
@@ -123,31 +160,39 @@ class TapoLuxController:
             if not auto_enabled or current is None:
                 continue
 
+            if len(lux_samples) < self.moving_avg_window:
+                continue
+
+            avg_lux = sum(lux_samples) / len(lux_samples)
+            error = target - avg_lux
+
+            command_interval = self.command_interval_s
+            if abs(error) <= self.close_error_lux:
+                command_interval = max(self.command_interval_s, self.close_command_interval_s)
+
             # Wait for fresh sensor data and avoid issuing commands too quickly.
             if last_sensor_ts <= self._last_controlled_sensor_ts:
                 continue
-            if now - self._last_command_ts < self.command_interval_s:
+            if now - self._last_command_ts < command_interval:
                 continue
 
-            error = target - current
             if abs(error) <= tolerance:
                 with self._lock:
                     self.state["lastAction"] = "target reached"
                 self._last_direction = 0
                 continue
 
-            # Very aggressive, banded jumps for rapid convergence.
+            # Exponential step curve:
+            # - keep step very small near target (<= exp_small_error_lux)
+            # - ramp quickly beyond that threshold
             abs_error = abs(error)
-            if abs_error >= 140:
-                step = min(self.max_step, 16)
-            elif abs_error >= 100:
-                step = min(self.max_step, 12)
-            elif abs_error >= 70:
-                step = min(self.max_step, 9)
-            elif abs_error >= 40:
-                step = min(self.max_step, 6)
+            if abs_error <= self.exp_small_error_lux:
+                step = self.min_step
             else:
-                step = int(abs_error * self.error_gain)
+                excess = abs_error - self.exp_small_error_lux
+                curve = 1.0 - math.exp(-self.exp_gain * excess)
+                scaled = self.min_step + (self.max_step - self.min_step) * curve
+                step = int(round(scaled))
                 step = max(self.min_step, min(self.max_step, step))
 
             direction = 1 if error > 0 else -1
@@ -187,7 +232,9 @@ class TapoLuxController:
 
     def update_sensor(self, lux):
         with self._lock:
-            self.state["currentLux"] = float(lux)
+            value = float(lux)
+            self.state["currentLux"] = value
+            self._lux_samples.append(value)
             self._last_sensor_ts = time.monotonic()
 
     def set_target(self, target_lux):
@@ -275,6 +322,18 @@ def make_handler(ctrl):
                 self._send_json(200, {"ok": True, "state": ctrl.get_state()})
                 return
 
+            if self.path == "/power":
+                on = data.get("on")
+                if on is None:
+                    self._send_json(400, {"ok": False, "error": "on is required"})
+                    return
+                ok, err = ctrl.set_power(bool(on))
+                if not ok:
+                    self._send_json(500, {"ok": False, "error": err, "state": ctrl.get_state()})
+                    return
+                self._send_json(200, {"ok": True, "state": ctrl.get_state()})
+                return
+
             self._send_json(404, {"ok": False, "error": "not found"})
 
         def log_message(self, fmt, *args):
@@ -289,7 +348,7 @@ def main():
 
     server = ThreadingHTTPServer((host, port), make_handler(controller))
     print(f"Tapo bridge listening on http://{host}:{port}")
-    print("Endpoints: GET /state, POST /sensor, POST /target, POST /auto, POST /brightness")
+    print("Endpoints: GET /state, POST /sensor, POST /target, POST /auto, POST /brightness, POST /power")
 
     try:
         server.serve_forever()

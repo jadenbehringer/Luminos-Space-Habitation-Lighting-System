@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './TapoControlPanel.module.css';
 
-export default function TapoControlPanel({ lux, bridgeData, writeSerial }) {
+export default function TapoControlPanel({ lux, bridgeData, writeSerial, detectedBlueLight }) {
   const {
     bridge,
     bridgeReachable,
@@ -27,8 +27,8 @@ export default function TapoControlPanel({ lux, bridgeData, writeSerial }) {
     });
   }, [lux, windowFilter]);
 
-  const t = Date.now() / 2000;
-  const currentBlueLightLevel = Math.round(3500 - (3300 * (effectiveFilter / 100)));
+  const generatedBlueLightLevel = Math.round(3500 - (3300 * (effectiveFilter / 100)));
+  const currentBlueLightLevel = detectedBlueLight !== null ? detectedBlueLight : generatedBlueLightLevel;
 
   useEffect(() => {
     setBrightnessInput(String(Math.round(bridge.brightness ?? 0)));

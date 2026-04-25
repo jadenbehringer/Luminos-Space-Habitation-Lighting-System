@@ -4,7 +4,7 @@ import { PROFILES } from '../data/dummy';
 export function useLiveData() {
   const startRef = useRef(Date.now());
   const histRef = useRef(Array.from({ length: 60 }, () => 300 + Math.random() * 100));
-  const sensorRef = useRef({ raw: null, voltage: null, lux: null, hasData: false });
+  const sensorRef = useRef({ raw: null, voltage: null, lux: null, blue: null, hasData: false, hasBlueData: false });
   const readerRef = useRef(null);
   const writerRef = useRef(null);
   const portRef = useRef(null);
@@ -15,6 +15,7 @@ export function useLiveData() {
     circadian: 280,
     fused: 312,
     lux: 150,
+    blue: null,
     history: histRef.current,
     servoPositions: [117, 81, 144, 36],
     mlWeights: [1.44, 1.1, 0.6],
@@ -82,14 +83,24 @@ export function useLiveData() {
 
           for (const line of lines) {
             const m = line.match(/RAW:\s*(\d+)\s*,\s*VOLTAGE:\s*([\d.]+)\s*,\s*LUX:\s*([\d.]+)/i);
-            if (!m) continue;
+            if (m) {
+              sensorRef.current = {
+                ...sensorRef.current,
+                raw: Number(m[1]),
+                voltage: Number(m[2]),
+                lux: Number(m[3]),
+                hasData: true,
+              };
+            }
 
-            sensorRef.current = {
-              raw: Number(m[1]),
-              voltage: Number(m[2]),
-              lux: Number(m[3]),
-              hasData: true,
-            };
+            const bMatch = line.match(/Blue:\s*(\d+)/i);
+            if (bMatch) {
+              sensorRef.current = {
+                ...sensorRef.current,
+                blue: Number(bMatch[1]),
+                hasBlueData: true,
+              };
+            }
           }
         }
       } catch (_) {
@@ -218,6 +229,7 @@ export function useLiveData() {
       setData((prev) => ({
         ...prev,
         raw,
+        blue: sensorRef.current.hasBlueData ? sensorRef.current.blue : null,
         circadian,
         fused,
         lux,

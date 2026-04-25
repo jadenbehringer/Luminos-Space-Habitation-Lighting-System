@@ -34,7 +34,7 @@ export default function Dashboard() {
       <div className={styles.grid}>
         <CrewPanel />
         <div className={styles.center}>
-          <TapoControlPanel lux={data.lux} bridgeData={bridgeData} writeSerial={data.writeSerial} />
+          <TapoControlPanel lux={data.lux} bridgeData={bridgeData} writeSerial={data.writeSerial} detectedBlueLight={data.blue} />
           <LightChart history={data.history} />
         </div>
         <ProfilesPanel activeProfile={data.activeProfile} onProfileClick={handleProfileClick} />

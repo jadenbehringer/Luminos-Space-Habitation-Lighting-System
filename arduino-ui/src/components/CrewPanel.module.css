@@ -21,7 +21,17 @@
   padding: 14px;
   margin-bottom: 10px;
   position: relative;
-  transition: border-color 0.3s;
+  transition: border-color 0.3s, background 0.3s, transform 0.15s;
+}
+
+.card:hover {
+  border-color: rgba(0, 200, 255, 0.45);
+  background: rgba(0, 45, 110, 0.5);
+  transform: translateY(-1px);
+}
+
+.card:active {
+  transform: translateY(0);
 }
 
 .card.active {

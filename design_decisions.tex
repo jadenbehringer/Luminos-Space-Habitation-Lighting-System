@@ -4,6 +4,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{graphicx}
+\graphicspath{{./}}
 \usepackage{hyperref}
 \usepackage{listings}
 \usepackage{xcolor}
@@ -54,7 +55,7 @@
 % ─── Header / Footer ────────────────────────────────────────────────────────
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\small AERO 636 — LUMINOS Adaptive Window System}
+\fancyhead[L]{\small AERO 636 | LUMINOS Adaptive Window System}
 \fancyhead[R]{\small Coding Design Decisions}
 \fancyfoot[C]{\thepage}
 \renewcommand{\headrulewidth}{0.4pt}
@@ -79,7 +80,7 @@
   {\Huge\bfseries\color{headblue} LUMINOS Adaptive Window System\\[0.4em]
    \large Coding Design Decisions}\\[1.5em]
   \rule{\linewidth}{1pt}\\[1em]
-  {\large AERO 636 — Spacecraft Human Factors}\\[0.5em]
+  {\large AERO 636: Spacecraft Human Factors}\\[0.5em]
   {\large Texas A\&M University}\\[2em]
   {\normalsize\textit{Document covers: Arduino firmware, Python Tapo bridge server,}}\\
   {\normalsize\textit{and React dashboard front-end}}\\[3em]
@@ -89,7 +90,7 @@
   \begin{abstract}
     \noindent
     This document records the key software and firmware engineering decisions made
-    during the development of the LUMINOS prototype — a subscale adaptive lighting
+    during the development of the LUMINOS prototype, a subscale adaptive lighting
     system designed to improve circadian entrainment for ISS crew members. The
     system spans three software layers: (1) an Arduino microcontroller that reads
     an analog light-dependent resistor and drives a servo-actuated blue-light
@@ -115,20 +116,20 @@ each running on a distinct compute platform and communicating over well-defined
 interfaces:
 
 \begin{enumerate}
-  \item \textbf{Arduino firmware} (\texttt{combined\_lightservo\_test.ino}) —
+  \item \textbf{Arduino firmware} (\texttt{combined\_lightservo\_test.ino}):
         runs on an Arduino Uno or Nano. Reads a GL5528-style LDR via the onboard
         10-bit ADC, computes lux using a power-law model, and accepts serial
         commands to position a servo-actuated blue-light gel filter. Outputs
         structured sensor data over USB-serial at 9600~baud.
 
-  \item \textbf{Python bridge server} (\texttt{Tapo\_cycle\_dashboard.py}) —
+  \item \textbf{Python bridge server} (\texttt{Tapo\_cycle\_dashboard.py}):
         runs on the host laptop. Receives lux readings from the React front-end,
         implements a closed-loop brightness controller, and issues set-point
         commands to the TP-Link Tapo L530 smart bulb over Wi-Fi using the
         \texttt{tapo} Python library. Exposes a local REST HTTP API on
         \texttt{127.0.0.1:8765}.
 
-  \item \textbf{React dashboard} (\texttt{arduino-ui/}) —
+  \item \textbf{React dashboard} (\texttt{arduino-ui/}):
         runs in the browser. Reads the Arduino's serial stream via the
         Web Serial API, forwards lux values to the bridge server, and renders
         live charts, lighting profile presets, servo/filter controls, and
@@ -191,7 +192,7 @@ and the fixed resistor on the low side (GND), so that \emph{more light}
 → \emph{lower LDR resistance} → \emph{higher ADC reading}. This is the
 conventional orientation for this component and was confirmed during the
 \texttt{light\_level\_test} calibration phase. (An earlier wiring attempt
-reversed this and required a corrected formula in firmware — the sign of the
+reversed this and required a corrected firmware; the sign of the
 inversion is documented in \texttt{light\_level\_test.ino}.)
 
 \subsection{Lux Conversion Model}
@@ -532,9 +533,9 @@ opposite direction.
 Two different inter-command delays are used:
 
 \begin{itemize}
-  \item \textbf{Normal:} 0.8~s — the Tapo bulb's measured response latency from
+  \item \textbf{Normal:} 0.8~s, the Tapo bulb's measured response latency from
         command receipt to stable light output.
-  \item \textbf{Close-to-target} ($|\epsilon| \leq 70$~lux): 2.5~s — extra
+  \item \textbf{Close-to-target} ($|\epsilon| \leq 70$~lux): 2.5~s: extra
         settling time when near the set-point, where small lux fluctuations
         could otherwise trigger rapid small-step commands that add up to
         overshoot.
@@ -623,11 +624,11 @@ the full closed-loop system was built.
 The dashboard uses two custom React hooks as its data layer:
 
 \begin{itemize}
-  \item \textbf{\texttt{useLiveData}} — manages the Web Serial API connection
+  \item \textbf{\texttt{useLiveData}}: manages the Web Serial API connection
         to the Arduino, parses incoming lux data, maintains simulation state
         when no Arduino is connected, and computes derived display quantities
         (orbit phase, mission time, alert level, active profile).
-  \item \textbf{\texttt{useTapoBridge}} — manages all communication with the
+  \item \textbf{\texttt{useTapoBridge}}: manages all communication with the
         Python bridge server, exposing bridge state and action functions to UI
         components.
 \end{itemize}
@@ -809,7 +810,7 @@ the window filter slider position:
 
 where $f \in [0, 100]$ is the filter percentage. At $f = 0\%$ (no filter),
 $B = 3500$~K equivalent; at $f = 100\%$ (full filter), $B = 200$. This is a
-display heuristic — not a calibrated measurement — intended to give the user
+display heuristic, not a calibrated measurement, intended to give the user
 intuitive feedback about the qualitative blue-light intensity of the current
 lighting environment. The range of 200–3500 was chosen to span from near-zero
 (amber gel fully in path) to a notional daylight-equivalent.
@@ -916,18 +917,29 @@ decisions.
   \end{tabular}
 \end{table}
 
+\subsection{Hardware Wiring Diagram}
+
+Figure~\ref{fig:wiring} shows the complete wiring diagram for the LUMINOS prototype, including the LDR voltage divider, SG90 servo, I2C light sensor, and status LED.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{wiring_diagram.png}
+  \caption{Arduino Uno wiring diagram. Left column (bottom to top): A5/SCL, A4/SDA, A3--A0, VIN, GND (x2), 5V, 3.3V, RESET, IOREF. Right column (top to bottom): AREF, GND, 13--8, 7--0. Highlighted pins are those used in this prototype.}
+  \label{fig:wiring}
+\end{figure}
+
 \subsection{Active vs.\ Passive Filtration}
 
 Three filtration approaches were considered:
 
 \begin{enumerate}
-  \item \textbf{PDLC smart film} — electrically switchable opaque/transparent.
+  \item \textbf{PDLC smart film}: electrically switchable opaque/transparent.
         Rejected because small samples require 60--120~V AC and a driver circuit,
         adding cost and complexity outside the project's scope.
-  \item \textbf{Electrochromic film} — voltage-variable tinting. Rejected
+  \item \textbf{Electrochromic film}: voltage-variable tinting. Rejected
         because small-quantity sourcing is difficult and cost is high;
         this was already flagged as a risk in the preliminary design report.
-  \item \textbf{Servo-actuated gel panel} (chosen) — mechanical swing of a
+  \item \textbf{Servo-actuated gel panel} (chosen): mechanical swing of a
         physical gel filter into the light path. Low cost, simple control
         (one PWM pin), directly observable, and maps cleanly to the three-layer
         software architecture.

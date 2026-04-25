@@ -1,3 +1,32 @@
+/**
+ * dummy.js
+ * --------
+ * Static seed data for the AstroView dashboard.
+ *
+ * Three exported constants are used throughout the app:
+ *   CREW     – astronaut roster with per-member lighting targets
+ *   PROFILES – predefined lighting profiles mapped to mission activities
+ *   SERVOS   – physical window servo descriptors
+ *   FILTERS  – blue-light filter bank state
+ *
+ * When no live serial / bridge data is available the UI falls back to
+ * these values so the dashboard remains fully interactive in simulation mode.
+ */
+
+// ---------------------------------------------------------------------------
+// CREW
+// ---------------------------------------------------------------------------
+// Each crew member defines:
+//   id            – short unique key used for React keying and selection state
+//   name          – last-name-first callsign (all-caps, military style)
+//   designation   – ISS role code (CDR, FE-n, MS)
+//   activity      – current scheduled activity label
+//   activityClass – CSS-friendly key used to map activity → colour palette
+//   targetLux     – desired ambient illuminance (lux) for this crew member's task
+//   overrides     – number of manual light-level overrides logged this session
+//   active        – legacy flag (currently unused; selection driven by UI state)
+//   color         – accent colour for inline styles
+//   colorBg       – translucent version of accent colour for card backgrounds
 export const CREW = [
   {
     id: 'ck',
@@ -5,7 +34,7 @@ export const CREW = [
     designation: 'CDR',
     activity: 'RESEARCH',
     activityClass: 'work',
-    targetLux: 1550,
+    targetLux: 1550,   // high illuminance for detailed lab work
     overrides: 3,
     active: true,
     color: '#00c8ff',
@@ -17,7 +46,7 @@ export const CREW = [
     designation: 'FE-1',
     activity: 'SLEEP',
     activityClass: 'sleep',
-    targetLux: 0,
+    targetLux: 0,      // blackout target during sleep phase
     overrides: 1,
     active: false,
     color: '#a080ff',
@@ -29,7 +58,7 @@ export const CREW = [
     designation: 'MS',
     activity: 'EVA PREP',
     activityClass: 'eva',
-    targetLux: 1250,
+    targetLux: 1250,   // bright pre-EVA suit-up environment
     overrides: 0,
     active: false,
     color: '#ffc800',
@@ -41,7 +70,7 @@ export const CREW = [
     designation: 'FE-2',
     activity: 'EXERCISE',
     activityClass: 'exercise',
-    targetLux: 800,
+    targetLux: 800,    // energising mid-level light for physical activity
     overrides: 2,
     active: false,
     color: '#00ff88',
@@ -49,6 +78,20 @@ export const CREW = [
   },
 ];
 
+// ---------------------------------------------------------------------------
+// PROFILES
+// ---------------------------------------------------------------------------
+// Predefined lighting scenes mapped to mission activities.
+// Each profile defines:
+//   id             – unique key; also used as the activeProfile string in useLiveData
+//   icon           – emoji displayed on the profile card
+//   name           – human-readable label (all-caps)
+//   targetRange    – descriptive lux range string shown in the UI
+//   targetLux      – numeric lux target sent to the Tapo bridge when selected
+//   blueLightLevel – expected blue-light sensor reading (TCS34725 raw counts)
+//                    for this scene; used as the generated fallback value
+//   servoPositions – [s1, s2, s3, s4] servo angles (0–180°) for each window
+//                    panel that achieve the target illuminance for this scene
 export const PROFILES = [
   {
     id: 'sleep',
@@ -56,7 +99,7 @@ export const PROFILES = [
     name: 'SLEEP',
     targetRange: '0 lux',
     targetLux: 0,
-    blueLightLevel: 210,
+    blueLightLevel: 210,           // minimal blue light — supports melatonin production
     servoPositions: [10, 15, 10, 5],
   },
   {
@@ -65,7 +108,7 @@ export const PROFILES = [
     name: 'DAWN',
     targetRange: '40–100 lux',
     targetLux: 70,
-    blueLightLevel: 840,
+    blueLightLevel: 840,           // gentle morning ramp-up
     servoPositions: [30, 35, 30, 28],
   },
   {
@@ -74,7 +117,7 @@ export const PROFILES = [
     name: 'DUSK',
     targetRange: '80–140 lux',
     targetLux: 110,
-    blueLightLevel: 620,
+    blueLightLevel: 620,           // warm wind-down before sleep
     servoPositions: [55, 50, 52, 48],
   },
   {
@@ -110,7 +153,7 @@ export const PROFILES = [
     name: 'EXERCISE',
     targetRange: '750–850 lux',
     targetLux: 800,
-    blueLightLevel: 2450,
+    blueLightLevel: 2450,          // elevated blue light supports alertness during exercise
     servoPositions: [120, 130, 128, 115],
   },
   {
@@ -137,11 +180,19 @@ export const PROFILES = [
     name: 'RESEARCH',
     targetRange: '1500+ lux',
     targetLux: 1550,
-    blueLightLevel: 3400,
+    blueLightLevel: 3400,          // maximum illuminance for precision laboratory tasks
     servoPositions: [145, 150, 155, 142],
   },
 ];
 
+// ---------------------------------------------------------------------------
+// SERVOS
+// ---------------------------------------------------------------------------
+// Descriptors for the four window panel servo actuators.
+//   id       – matches the s1–s4 keys used in servoPositions above
+//   name     – human-readable panel name
+//   location – physical location within the habitat module
+//   live     – whether this servo is currently active / receiving commands
 export const SERVOS = [
   { id: 's1', name: 'Window A', location: 'Main panel · Blue filter', live: true },
   { id: 's2', name: 'Window B', location: 'Starboard · Filter stack', live: false },
@@ -149,6 +200,13 @@ export const SERVOS = [
   { id: 's4', name: 'Window D', location: 'Cupola · Dual filter', live: false },
 ];
 
+// ---------------------------------------------------------------------------
+// FILTERS
+// ---------------------------------------------------------------------------
+// Static state for the four blue-light filter panels.
+//   id      – unique key
+//   label   – display label
+//   engaged – whether the filter is currently inserted in the light path
 export const FILTERS = [
   { id: 'a', label: 'Filter A', engaged: true },
   { id: 'b', label: 'Filter B', engaged: false },
